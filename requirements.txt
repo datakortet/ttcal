@@ -1,0 +1,6 @@
+-e ../dk
+-e ../dkdjango
+-e ../dkjs
+-e ../dk-template
+
+django==1.7.11
