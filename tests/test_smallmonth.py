@@ -195,7 +195,6 @@ def test_small_month_widget():
     "Test the small_month_widget tag."
     month = ttcal.Month.from_date(datetime.date(2012, 5, 4))
     my_template = template.Template('''
-        {% load coretags %}
         {% small_month_widget month full_weeks=False weeknum=False%}
         ''')
     assert 0

@@ -367,7 +367,7 @@ def test_month_widget():
     "Test the month_widget tag."
     month = ttcal.Month.from_date(datetime.date(2012, 5, 4))
     my_template = template.Template(u'''
-    {% load coretags %}
+    {% load ttcal_tags %}
     {% month_widget month full_weeks=False weeknum=False navigation=True daynames="long" %}
     ''')
     rendered = my_template.render(template.Context({"month": month}))

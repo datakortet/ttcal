@@ -2,7 +2,7 @@
 
 """Tags to manipulate ttcal objects in templates.
 """
-
+from __future__ import print_function
 import traceback
 from django import template
 # from django.utils.safestring import mark_safe
@@ -48,5 +48,5 @@ def previous(ttval, n=1):
 def is_current(ttval):
     """Return True if the `ttval` is now.
     """
-    print 'is_current:', ttval, ttval == ttval.__class__()
+    print('is_current:', ttval, ttval == ttval.__class__())
     return ttval == ttval.__class__()
