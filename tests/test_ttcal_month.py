@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from datetime import date, datetime
 import pickle
 import ttcal
@@ -30,12 +31,10 @@ def test_rangetuple(months):
 
 def test_compare(months):
     a, b = ttcal.Month(2015, 10), ttcal.Month(2013, 3)
-    print
-    print "ab:", a > b
-    print "ab:", a > b
-    print
-    print "Month compare:", ttcal.Month(2015, 10) > ttcal.Month(2013, 3)
-    print "Month compare:", ttcal.Month(2015, 10) > ttcal.Month(2013, 3)
+    print("ab:", a > b)
+    print("ab:", a > b)
+    print("Month compare:", ttcal.Month(2015, 10) > ttcal.Month(2013, 3))
+    print("Month compare:", ttcal.Month(2015, 10) > ttcal.Month(2013, 3))
     assert ttcal.Month(2015, 10) > ttcal.Month(2013, 3)
     assert ttcal.Month() > months[0]
     assert months[0] < months[1]
