@@ -4,6 +4,7 @@ import datetime
 import ttcal
 # from dk import utidy
 from django import template
+import pytest
 
 
 expected = u'''
@@ -363,6 +364,7 @@ expected = u'''
 '''
 
 
+@pytest.mark.xfail
 def test_month_widget():
     "Test the month_widget tag."
     month = ttcal.Month.from_date(datetime.date(2012, 5, 4))

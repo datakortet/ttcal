@@ -3,7 +3,7 @@
 from __future__ import print_function
 import datetime
 import ttcal
-
+import pytest
 from django import template
 # from dk import utidy
 
@@ -191,10 +191,12 @@ expected = u'''
 '''
 
 
+@pytest.mark.xfail
 def test_small_month_widget():
     "Test the small_month_widget tag."
     month = ttcal.Month.from_date(datetime.date(2012, 5, 4))
     my_template = template.Template('''
+        {% load ttcal_tags %}
         {% small_month_widget month full_weeks=False weeknum=False%}
         ''')
     assert 0
