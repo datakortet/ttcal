@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Date (single day) operations.
 """
-
 import calendar
 import datetime
 import re
@@ -14,9 +13,9 @@ class fstr(str):
     """String sub-class with a split() method that splits a given indexes.
 
        Usage::
-
+          >>> from __future__ import print_function
           >>> r = fstr('D2008022002')
-          >>> print r.split(1, 5, 7, 9)
+          >>> print(r.split(1, 5, 7, 9))
           ['D', '2008', '02', '20', '02']
           >>> _, year, _ = r.split(1,5)
           >>> year
