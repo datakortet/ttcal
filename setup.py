@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""ttcal - short description
+"""
+ttcal - calendar operations
+===========================
 """
 
 classifiers = """\

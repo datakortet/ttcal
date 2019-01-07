@@ -4,6 +4,11 @@ from unittest import TestCase
 import ttcal
 import pytest
 
+try:
+    unicode
+except NameError:
+    unicode = str
+
 
 @pytest.fixture
 def dd():
