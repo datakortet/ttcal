@@ -10,7 +10,6 @@ def pytest_configure():
         INSTALLED_APPS=(
             # 'dkjs',
             # 'dktemplate',
-            'ttcal',
             'django',
         )
     )
