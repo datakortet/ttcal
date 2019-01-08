@@ -60,7 +60,6 @@ def test_cmp():
 def test_repr(days):
     assert repr(days[1]) == '2012-4-8-4'
     assert str(days[1]) == '2012-04-08'
-    assert unicode(days[1]) == u'2012-04-08'
 
 
 def test_date(days):

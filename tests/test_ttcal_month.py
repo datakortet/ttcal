@@ -114,7 +114,6 @@ def test_hash(months):
 
 
 def test_unicode(months):
-    assert unicode(months[0]) == u'2012-04'
     assert repr(months[0]) == 'Month(2012, 4)'
     assert str(months[0]) == '2012-04'
 

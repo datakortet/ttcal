@@ -37,7 +37,6 @@ def test_middle(years):
 
 def test_unicode(years):
     assert repr(years[0]) == 'Year(2005)'
-    assert unicode(years[0]) == u'2005'
     assert str(years[0]) == '2005'
 
 
