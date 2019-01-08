@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
-from datetime import timedelta, datetime
-from unittest import TestCase
+from builtins import str
+from datetime import timedelta
 import ttcal
 import pytest
-
-try:
-    unicode
-except NameError:
-    unicode = str
 
 
 @pytest.fixture
@@ -40,7 +35,7 @@ def test_str(dd):
     assert str(dd[1]) == '1:10:00'
     assert str(dd[2]) == '1:10:00'
     assert "%s" % dd[3] == '1:10:00'
-    assert unicode(dd[1]) == u'1:10:00'
+    assert str(dd[1]) == u'1:10:00'
 
 
 def test_eq(dd):

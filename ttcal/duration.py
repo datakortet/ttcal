@@ -50,7 +50,7 @@ class Duration(datetime.timedelta):
             """, re.VERBOSE)
         time_matches = time_matcher.match(txt)
         time_groups = time_matches.groupdict()
-        keys = time_groups.keys()
+        keys = list(time_groups.keys())
 
         if time_groups.get('negation') == '-':
             scale = -1
@@ -129,11 +129,11 @@ class Duration(datetime.timedelta):
         sgn, _hr, _mn, sc = self.duration_tuple()
         return int(sgn == "") * sc
 
-    def __str__(self):
+    def __str__(self):      # pragma: nocover
         return '%s%d:%02d:%02d' % self.duration_tuple()
 
-    def __unicode__(self):
-        return unicode(str(self))
+    def __unicode__(self):      # pragma: nocover
+        return u'%s%d:%02d:%02d' % self.duration_tuple()
 
     def toint(self):
         """Convert self to integer.
@@ -219,7 +219,8 @@ class Duration(datetime.timedelta):
     def __sub__(self, other):
         return Duration(super(Duration, self).__sub__(other))
 
-    def __div__(self, other):
+    def __div__(self, other):       # pragma: nocover
+        # this one is called for Python 2.7
         if isinstance(other, Duration):
             try:
                 return float(self.toint()) / float(other.toint())
@@ -227,13 +228,14 @@ class Duration(datetime.timedelta):
                 return 0.0
         return Duration(super(Duration, self).__div__(other))
 
-    # def __truediv__(self, other):
-    #     # if isinstance(other, Duration):
-    #     #     try:
-    #     #         return int(float(self.toint()) / float(other.toint()))
-    #     #     except ZeroDivisionError:
-    #     #         return 0
-    #     return Duration(super(Duration, self).__truediv__(other))
+    def __truediv__(self, other):   # pragma: nocover
+        # this one is used for Python 3+
+        if isinstance(other, Duration):
+            try:
+                return int(float(self.toint()) / float(other.toint()))
+            except ZeroDivisionError:
+                return 0
+        return Duration(super(Duration, self).__truediv__(other))
 
     # def __rsub__(self, other):
     #     return other.__sub__(self)

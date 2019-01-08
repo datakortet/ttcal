@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from builtins import str
 import datetime
 from .calfns import chop, rangecmp, rangetuple
 from .day import Days, Day
@@ -82,8 +83,14 @@ class Year(object):
     #     t = datetime.time()
     #     return datetime.datetime.combine(d, t)
 
-    def __unicode__(self):
-        return unicode(self.year)
+    def __unicode__(self):      # pragma: nocover
+        return str(self.year)
+
+    def __repr__(self):
+        return 'Year(%d)' % self.year
+
+    def __str__(self):      # pragma: nocover
+        return str(self.year)
 
     @property
     def Month(self):
@@ -237,12 +244,6 @@ class Year(object):
     def december(self):
         return self.months[11]
     # pylint:enable=C0111
-
-    def __repr__(self):
-        return 'Year(%d)' % self.year
-
-    def __str__(self):
-        return str(self.year)
 
     def dayiter(self):
         for m in self.months:

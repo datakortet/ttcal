@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
+from __future__ import print_function, unicode_literals
 from datetime import date, datetime
 import pickle
 import ttcal
 import pytest
+
+try:
+    unicode
+except NameError:  # pragma: nocover
+    unicode = str
+
 
 
 @pytest.fixture
@@ -13,6 +19,11 @@ def months():
         ttcal.Month(year=2012, month=10),
         ttcal.Month(date=date(2012, 7, 10)),
     ]
+
+
+def test_stringification(months):
+    assert unicode(months[0]) == '2012-04'
+    assert str(months[0]) == '2012-04'
 
 
 def test_range(months):

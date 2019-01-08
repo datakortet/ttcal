@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function, unicode_literals
 from datetime import date, datetime
-from unittest import TestCase
 import ttcal
 import pytest
 
@@ -9,6 +9,7 @@ try:
 except NameError:  # pragma: nocover
     unicode = str
 
+
 @pytest.fixture
 def years():
     return [
@@ -16,6 +17,11 @@ def years():
         ttcal.Year(),
         ttcal.Year(2025),
     ]
+
+
+def test_stringification(years):
+    assert unicode(years[0]) == '2005'
+    assert str(years[0]) == '2005'
 
 
 def test_timetuple(years):
@@ -95,7 +101,7 @@ def test_prev(years):
 def test_next(years):
     """Test of the next method.
     """
-    assert years[0].next() ==  ttcal.Year(2006)
+    assert years[0].next() == ttcal.Year(2006)
 
 
 def test_periods(years):
@@ -152,7 +158,7 @@ def test_cmp(years):
     assert not ttcal.Year(2015) in [None]
     assert not ttcal.Year(2015) < None
     assert not ttcal.Year(2015) <= None
-    assert not ttcal.Year(2015) == None
+    assert not ttcal.Year(2015) is None
     assert not ttcal.Year(2015) > None
     assert not ttcal.Year(2015) >= None
 

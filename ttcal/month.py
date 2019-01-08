@@ -95,8 +95,14 @@ class Month(object):
         """
         return Month, (self.year, self.month)
 
-    def __unicode__(self):
+    def __unicode__(self):      # pragma: nocover
         return u"%04d-%02d" % (self.year, self.month)
+
+    def __str__(self):      # pragma: nocover
+        return '%04d-%02d' % (self.year, self.month)
+
+    def __repr__(self):
+        return 'Month(%s, %s)' % (self.year, self.month)
 
     # @property
     # def Year(self):
@@ -185,12 +191,6 @@ class Month(object):
         return self + (-n)
 
     # rsub doesn't make sense
-
-    def __repr__(self):
-        return 'Month(%s, %s)' % (self.year, self.month)
-
-    def __str__(self):
-        return '%04d-%02d' % (self.year, self.month)
 
     # NOTE: Django's query engine calls both __call__ and __iter__ on values
     #       that are passed in, and uses the return values instead of the value

@@ -12,8 +12,9 @@ register = template.Library()
 
 
 @register.filter
-def surround(ttval, n=1):
-    """Return values from `ttval` - `n` up to `ttval` + `n`.
+def surround(ttval, n='1'):
+    """Return values from ``ttval`` - ``n``
+       up to (but not including) ``ttval`` + ``n``.
     """
     n = int(n, 10)
     cur = -n
@@ -35,7 +36,7 @@ def chop_at_now(ttlist):
 
 
 @register.filter
-def previous(ttval, n=1):
+def previous(ttval, n='1'):
     """Return the previous `n` objects.
     """
     cur = ttval

@@ -8,9 +8,8 @@ def pytest_configure():
     settings.configure(
         TEMPLATE_DEBUG=False,
         INSTALLED_APPS=(
-            # 'dkjs',
-            # 'dktemplate',
             'django',
+            'ttcal',
         )
     )
     django.setup()
