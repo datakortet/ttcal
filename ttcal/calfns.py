@@ -45,10 +45,12 @@ def rangetuple(x):
     return x
 
 
-def rangecmp((a, b), (c, d)):
+def rangecmp(interval_a, interval_b):
     """Compare half-open intervals [a, b) and [c, d)
        They compare equal if there is overlap.
     """
+    (a, b) = interval_a
+    (c, d) = interval_b
     if (a, b) == (c, d):
         return 0
     if (a, b) > (c, d):
