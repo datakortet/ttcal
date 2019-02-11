@@ -25,6 +25,7 @@ def toint_obj():
 
 def test_sum(dd):
     assert ttcal.Duration.sum(dd) == ttcal.Duration(days=1, hours=6, minutes=44, seconds=20)
+    assert ttcal.Duration.sum(dd, ttcal.Duration(days=1)) == ttcal.Duration(days=2, hours=6, minutes=44, seconds=20)
 
 
 def test_duration_tuple(dd):
