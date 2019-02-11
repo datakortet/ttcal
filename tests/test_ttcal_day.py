@@ -28,6 +28,7 @@ def test_from_idtag(days):
 def test_parse():
     assert ttcal.Day.parse("") is None
     assert ttcal.Day.parse('02051970') == ttcal.Day(1970, 5, 2)
+    assert ttcal.Day.parse('02.05.1970') == ttcal.Day(1970, 5, 2)
 
 
 def test_ctor_raises():
@@ -193,7 +194,7 @@ class TestDay(TestCase):
     def test_display(self):
         """Test of the display property.
         """
-        #assert self.day3.display, 'today month')
+        # assert self.day3.display, 'today month')
         assert ('today' in self.day3.display)
         assert ('month' in self.day3.display)
 
@@ -223,7 +224,7 @@ class TestDay(TestCase):
     def test_in_month(self):
         """Test of the in_month property.
         """
-        assert (self.day3.in_month)
+        assert self.day3.in_month
 
     def test_compare(self):
         """Test the compare method.

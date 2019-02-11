@@ -88,13 +88,13 @@ class Day(datetime.date):
             (?:\s*)
             (?P<isodate>
               (?P<iso_yr>[12]\d{3})
-              (?P<sep>[-\./\s])
+              (?P<sep>[-./\s])
               (?P<iso_mnth>0[1-9]|1[012]|[1-9])
               (?P=sep)
               (?P<iso_day>3[01]|[12]\d|0[1-9]|[1-9]))
             |(?P<dmy>
               (?P<dmy_day>3[01]|[12]\d|0[1-9]|\d)
-              (?P<dmy_sep>[-\./\s])
+              (?P<dmy_sep>[-./\s])
               (?P<dmy_mnth>0[1-9]|1[012]|\d)
               (?P=dmy_sep)
               (?P<dmy_yr>[12]\d{3}))
@@ -108,7 +108,7 @@ class Day(datetime.date):
               (?P<isonsp_day>3[01]|[12]\d|0[1-9]))
             |(?P<two>
               (?P<two_day>3[01]|[12]\d|0[1-9]|\d)
-              (?P<two_sep>[\./\s])
+              (?P<two_sep>[./\s])
               (?P<two_mnth>0[1-9]|1[012]|\d)
               (?P=two_sep)
               (?P<two_yr>[1-9]\d))
