@@ -5,7 +5,7 @@ sudo: false
 python:
   - "2.7"
   - "3.4"
-  # - "3.6"
+  - "3.7"
 
 
 before_install:
@@ -16,10 +16,10 @@ before_install:
 
 install:
   - pip install -r requirements.txt
-  - pip install coveralls
+  - pip install codecov
 
 script:
-  pytest -v --cov=ttcal .
+  pytest -v --cov=ttcal tests
 
 after_success:
-  coveralls
+  codecov

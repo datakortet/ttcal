@@ -21,7 +21,7 @@ import setuptools
 from distutils.core import setup, Command
 from setuptools.command.test import test as TestCommand
 
-version = '1.0.2'
+version = '1.0.3'
 
 DIRNAME = os.path.dirname(__file__)
 description = open(os.path.join(DIRNAME, 'README.rst'), 'rb').read()
@@ -53,7 +53,10 @@ setup(
     author='Bjorn Pettersen',
     author_email='bp@datakortet.no',
     requires=[],
-    install_requires=[],
+    install_requires=[
+        'six',
+        'future',
+    ],
     # description=__doc__.strip(),
     long_description=description,
     classifiers=[line for line in classifiers.split('\n') if line],
