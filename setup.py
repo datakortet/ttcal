@@ -22,7 +22,7 @@ import setuptools
 from distutils.core import setup, Command
 from setuptools.command.test import test as TestCommand
 
-version = '1.0.3'
+version = '1.0.4'
 
 DIRNAME = os.path.dirname(__file__)
 description = open(os.path.join(DIRNAME, 'README.rst'), 'rb').read()
@@ -62,6 +62,9 @@ setup(
     long_description=description,
     classifiers=[line for line in classifiers.split('\n') if line],
     cmdclass={'test': PyTest},
-    packages=['ttcal'],
+    packages=[
+        'ttcal',
+        'ttcal.templatetags',
+    ],
     zip_safe=False,
 )
