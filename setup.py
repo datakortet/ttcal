@@ -19,35 +19,14 @@ Topic :: Software Development :: Libraries
 
 import sys, os
 import setuptools
-from distutils.core import setup, Command
-from setuptools.command.test import test as TestCommand
 
-version = '1.0.4'
+version = '1.0.5'
 
 DIRNAME = os.path.dirname(__file__)
-description = open(os.path.join(DIRNAME, 'README.rst'), 'rb').read()
+description = open(os.path.join(DIRNAME, 'README.rst'), 'r').read()
 
 
-class PyTest(TestCommand):
-    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
-
-    def initialize_options(self):
-        TestCommand.initialize_options(self)
-        self.pytest_args = []
-
-    def finalize_options(self):
-        TestCommand.finalize_options(self)
-        self.test_args = []
-        self.test_suite = True
-
-    def run_tests(self):
-        # import here, cause outside the eggs aren't loaded
-        import pytest
-        errno = pytest.main(self.pytest_args)
-        sys.exit(errno)
-
-
-setup(
+setuptools.setup(
     name='ttcal',
     version=version,
     url='https://github.com/datakortet/ttcal',
@@ -61,10 +40,6 @@ setup(
     # description=__doc__.strip(),
     long_description=description,
     classifiers=[line for line in classifiers.split('\n') if line],
-    cmdclass={'test': PyTest},
-    packages=[
-        'ttcal',
-        'ttcal.templatetags',
-    ],
+    packages=setuptools.find_packages(exclude=['tests']),
     zip_safe=False,
 )
