@@ -7,7 +7,7 @@ from .day import Day, Days, Today
 from .duration import Duration
 from .calfns import chop, isoweek
 from .month import Month
-from .week import Week  #, Weeks
+from .week import Week
 from .year import Year
 
 
@@ -22,4 +22,4 @@ def from_idtag(idtag):
         'd': Day,
         'm': Month,
         'y': Year,
-        }[idtag[0]].from_idtag(idtag)
+    }[idtag[0]].from_idtag(idtag)

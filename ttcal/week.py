@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
+"""
+Week class.
+"""
 import datetime
 from .day import Day, Days
 from .calfns import isoweek, rangecmp, rangetuple
 
 
 class Week(object):
+    """A single week in a Year.
+    """
     year = None
     num = None
     days = None
@@ -39,6 +44,8 @@ class Week(object):
 
     @classmethod
     def from_idtag(cls, tag):
+        """Parse tag and return a week object.
+        """
         # w20081
         y = int(tag[1:5])
         w = int(tag[5:])
@@ -46,6 +53,8 @@ class Week(object):
 
     @classmethod
     def weeknum(cls, n=None, year=None):
+        """Return the ISO week number.
+        """
         if n is None and year is None:
             year, n = datetime.date.today().isocalendar()[:2]
         if year is None:
@@ -70,6 +79,8 @@ class Week(object):
         return any(d.today for d in self.days)
 
     def idtag(self):
+        """Return a tag representing this week.
+        """
         return 'w%d%d' % (self.year, self.num)
 
     @property
@@ -99,6 +110,8 @@ class Week(object):
         return iter(self.days)
 
     def until_today(self):
+        """Yield all days in week that are in the past.
+        """
         for d in self.days:
             if d.today:
                 break
@@ -108,6 +121,9 @@ class Week(object):
         return self.year * 100 + self.num
 
     def rangetuple(self):
+        """Return a pair of datetime objects representing this week
+           (as a half-open interval).
+        """
         return self.days[0].rangetuple()[0], self.days[-1].rangetuple()[-1]
 
     def __lt__(self, other):
@@ -128,6 +144,9 @@ class Week(object):
             return False
         return rangecmp(self.rangetuple(), othr) == 0
 
+    def __ne__(self, other):
+        return not self == other
+
     def __gt__(self, other):
         othr = rangetuple(other)
         if othr is other:
@@ -139,34 +158,6 @@ class Week(object):
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) >= 0
-
-
-        # t = (self.year, self.num)
-        # if isinstance(other, Week):
-        #     return cmp(t, (other.year, other.num))
-        # if isinstance(other, Day):
-        #     if self.days[-1] > other:
-        #         return 1
-        #     if self.days[0] < other:
-        #         return -1
-        #     return 0
-        # if hasattr(other, 'year'):
-        #     if self.year < other.year:
-        #         return -1
-        #     if self.year > other.year:
-        #         return 1
-        #     if hasattr(other, 'month'):
-        #         if self.days[0] < other:
-        #             return -1
-        #         if self.days[-1] > other:
-        #             return 1
-        #         if hasattr(other, 'day'):
-        #             if self.days[0] < other:
-        #                 return -1
-        #             if self.days[-1] > other:
-        #                 return 1
-        #             return 0
-        # return 0
 
     # def __eq__(self, other):
     #     return self.year == other.year and self.num == other.num
@@ -244,4 +235,6 @@ def _Week(self):
     """Return a Week object representing the week `self` belongs to.
     """
     return Week.weeknum(self.weeknum, self.isoyear)
+
+
 Day.week = property(_Week)

@@ -178,3 +178,12 @@ def test_mark(years):
 def test_format(years):
     assert years[0].format('Yyx') == '200505x'
     assert years[0].format() == '2005'
+
+
+def test_int_years():
+    assert ttcal.Year(2015) < 2016
+    assert ttcal.Year(2015) <= 2016
+    assert ttcal.Year(2016) > 2015
+    assert ttcal.Year(2016) >= 2015
+    assert ttcal.Year(2016) != 2015
+    assert ttcal.Year(2016) == 2016

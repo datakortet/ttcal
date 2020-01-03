@@ -177,9 +177,7 @@ def test_dayiter(months):
     days = []
     for i, day in enumerate(months[2].dayiter()):
         days.append(day)
-        if i == 2:
-            break
-    assert days == res
+    assert days[:3] == res
 
 
 def test_days(months):
@@ -207,6 +205,7 @@ def test_marked_days(months):
     """
     res = [ttcal.Day(2012, 10, 3), ttcal.Day(2012, 10, 10)]
     months[1].mark(ttcal.Day(2012, 10, 10))
+    months[1].mark(ttcal.Day(2012, 10, 10), value='appended', method='append')
     months[1].mark(ttcal.Day(2012, 10, 3))
     days = []
     for day in months[1].marked_days():

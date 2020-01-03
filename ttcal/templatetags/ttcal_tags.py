@@ -3,9 +3,7 @@
 """Tags to manipulate ttcal objects in templates.
 """
 from __future__ import print_function
-import traceback
 from django import template
-# from django.utils.safestring import mark_safe
 
 
 register = template.Library()

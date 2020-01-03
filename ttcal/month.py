@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+"""
+Month operations.
+"""
 import re
 import calendar
 import datetime
@@ -7,7 +10,7 @@ from .week import Week
 from .calfns import chop, rangecmp, rangetuple
 
 
-class Month(object):
+class Month(object):   # pylint:disable=too-many-public-methods
     """A calendar month.
     """
 
@@ -33,6 +36,9 @@ class Month(object):
         return cls(year=d.year, month=d.month)
 
     def rangetuple(self):
+        """Return a datetime tuple representing this month
+           (as a half-open interval).
+        """
         return self.first.datetime(), (self.last + 1).datetime()
 
     @classmethod
@@ -48,8 +54,8 @@ class Month(object):
             """, re.VERBOSE)
         m = mnth_matcher.match(txt)
         if not m:
-            raise ValueError(
-                (u"Ugyldig format, må være åååå-mm, ikke %r." % txt).encode('u8'))
+            msg = u"Ugyldig format, må være åååå-mm, ikke %r." % txt
+            raise ValueError(msg.encode('u8'))
         mnth_groups = m.groupdict()
 
         return cls(int(mnth_groups["year"]), int(mnth_groups["month"]))
@@ -68,7 +74,7 @@ class Month(object):
             self.year = year
             self.month = month
 
-        if not (1 <= self.month <= 12):
+        if not 1 <= self.month <= 12:
             raise ValueError("Month must be in 1..12.")
 
         self.calendar = calendar.Calendar()
@@ -112,6 +118,8 @@ class Month(object):
 
     @property
     def Month(self):
+        """Return the month (for api completeness).
+        """
         return self
 
     def __hash__(self):
@@ -150,6 +158,9 @@ class Month(object):
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) == 0
+
+    def __ne__(self, other):
+        return not self == other
 
     def __gt__(self, other):
         othr = rangetuple(other)
@@ -206,6 +217,8 @@ class Month(object):
     #     return iter(self.weeks)
 
     def dayiter(self):
+        """Iterator over days in each week of month.
+        """
         for wk in iter(self.weeks):
             for day in wk:
                 yield day
@@ -272,6 +285,8 @@ class Month(object):
         raise KeyError
 
     def mark(self, d, value='mark', method='replace'):
+        """Add a 'mark' to a day in this month.
+        """
         try:
             day = self[d]
             if method == 'replace':
@@ -286,6 +301,8 @@ class Month(object):
             pass
 
     def marked_days(self):
+        """Yield all days with marks.
+        """
         for wk in self.weeks:
             for d in wk:
                 if hasattr(d, 'mark'):
@@ -358,4 +375,6 @@ def _Month(self):
     """Return a Month object representing the month `self` belongs to.
     """
     return Month(self.year, self.month)
+
+
 Day.Month = property(_Month)

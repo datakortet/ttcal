@@ -45,6 +45,7 @@ def test_compare(week):
     assert w > y14
     assert w < y16
     assert w == y15
+    assert not w != y15
 
     assert w < d16
     assert w <= d16

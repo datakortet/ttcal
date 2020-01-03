@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
-from builtins import str
+"""
+Year class.
+"""
+from builtins import str   # pylint:disable=redefined-builtin
 import datetime
 from .calfns import chop, rangecmp, rangetuple
-from .day import Days, Day
+from .day import Day
 from .month import Month
 
 
-# noinspection PyPep8Naming
-class Year(object):
+class Year(object):    # pylint:disable=too-many-public-methods
+    """A single year.
+    """
     def __init__(self, year=None):
         super(Year, self).__init__()
         if year is None:
@@ -24,39 +28,57 @@ class Year(object):
         return self.dayiter()
 
     def rangetuple(self):
-        return self.first.datetime(), (self+1).first.datetime()
+        """Return a pair of datetime objects containing year
+           (in a half-open interval).
+        """
+        return self.first.datetime(), (self + 1).first.datetime()
 
     def __lt__(self, other):
+        if isinstance(other, int):
+            return self.year < other
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) < 0
 
     def __le__(self, other):
+        if isinstance(other, int):
+            return self.year <= other
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) <= 0
 
     def __eq__(self, other):
+        if isinstance(other, int):
+            return self.year == other
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) == 0
 
+    def __ne__(self, other):
+        return not self == other
+
     def __gt__(self, other):
+        if isinstance(other, int):
+            return self.year > other
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) > 0
 
     def __ge__(self, other):
+        if isinstance(other, int):
+            return self.year >= other
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) >= 0
 
     def timetuple(self):
+        """Returns a datetime at 00:00:00 on January 1st.
+        """
         d = datetime.date(*self.first.datetuple())
         t = datetime.time()
         return datetime.datetime.combine(d, t)
@@ -100,6 +122,8 @@ class Year(object):
 
     @property
     def Year(self):
+        """Return the year (for api completeness).
+        """
         return self
 
     @classmethod
@@ -117,6 +141,8 @@ class Year(object):
         return 'y%d' % self.year
 
     def marked_days(self):
+        """Yield all 'marked' days in year.
+        """
         for m in self.months:
             for day in m.marked_days():
                 yield day
@@ -243,17 +269,22 @@ class Year(object):
     @property
     def december(self):
         return self.months[11]
-    # pylint:enable=C0111
 
     def dayiter(self):
+        """Yield all days in all months in year.
+        """
         for m in self.months:
             for d in m.days():
                 yield d
 
     def rows(self):
+        """Return a year calendar layout (3x4).
+        """
         return chop(iter(self.months), 3)
 
     def rows4(self):
+        """Return a year calendar layout (4x3).
+        """
         return chop(iter(self.months), 4)
 
     @property
@@ -284,6 +315,8 @@ class Year(object):
         return m[day]
 
     def mark_period(self, p, value='mark'):
+        """Add a 'mark' to a series (period) of days in year.
+        """
         d = p.first
         while d != p.last:
             self.mark(d, value)
@@ -291,6 +324,8 @@ class Year(object):
         self.mark(p.last, value)
 
     def mark(self, d, value='mark'):
+        """Add a 'mark' to a day in this year.
+        """
         try:
             self[d].mark = value
         except KeyError:  # pragma:nocover
@@ -321,6 +356,8 @@ def _Day_Year(self):
     """Return a Year object representing the year `self` belongs to.
     """
     return Year(self.year)
+
+
 Day.Year = property(_Day_Year)
 
 
@@ -329,4 +366,6 @@ def _Month_Year(self):
     """Return a Year object for the year-part of this month.
     """
     return Year(self.year)
+
+
 Month.Year = property(_Month_Year)

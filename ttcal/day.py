@@ -40,7 +40,7 @@ class fstr(str):
         return res
 
 
-class Day(datetime.date):
+class Day(datetime.date):        # pylint:disable=too-many-public-methods
     """A calendar date.
     """
 
@@ -176,7 +176,10 @@ class Day(datetime.date):
         return Days(self.first, self.last)
 
     def rangetuple(self):
-        return self.datetime(), (self+1).datetime()
+        """Return a datetime tuple representing this day
+           (as a half-open interval).
+        """
+        return self.datetime(), (self + 1).datetime()
 
     def between_tuple(self):
         """Return a tuple of datetimes that is convenient for sql
@@ -356,7 +359,7 @@ class Day(datetime.date):
         return 5 <= self.weekday <= 6
 
     @property
-    def special(self):
+    def special(self):  # pylint:disable=no-self-use
         """True if the database has an entry for this date (sets special_hours).
         """
         return False

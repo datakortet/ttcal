@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+"""
+Misc. calendar functions.
+"""
 import datetime
 from itertools import islice
 
@@ -35,13 +38,18 @@ def isoweek(year, week):
 
 
 def rangetuple(x):
+    """Return a 2-tuple of datetimes representing a time range.
+    """
     if hasattr(x, 'rangetuple'):
         return x.rangetuple()
     if isinstance(x, datetime.date):
-        return (datetime.datetime.combine(x, datetime.time()),
-                datetime.datetime.combine(
-                    datetime.date.fromordinal(1 + x.toordinal()), datetime.time())
-                )
+        return (
+            datetime.datetime.combine(x, datetime.time()),
+            datetime.datetime.combine(
+                datetime.date.fromordinal(1 + x.toordinal()),
+                datetime.time()
+            )
+        )
     return x
 
 
