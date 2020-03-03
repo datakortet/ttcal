@@ -1,0 +1,10 @@
+_schema: https://static.datakortet.no/schema/dkbuild.schema.yaml
+
+package:
+  name: ttcal
+  description: UNKNOWN
+  version: 1.0.6
+  created: 2013
+
+build:
+  venv: ttcal

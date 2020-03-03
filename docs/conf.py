@@ -231,7 +231,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'ttcal', u'ttcal Documentation',
-   u'', 'ttcal', 'One line description of project.',
+   u'', 'ttcal', 'UNKNOWN',
    'Miscellaneous'),
 ]
 
