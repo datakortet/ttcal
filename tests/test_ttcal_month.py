@@ -135,6 +135,8 @@ def test_qmp(months):
     assert months[0] == date(2012, 4, 5)
     assert not (months[1] == months[0])
     # assert not (months[0] == 'foo')
+    assert ttcal.Month(2020, 2) == ttcal.Month(2020, 2)
+    assert ttcal.Month(2020, 2) != ttcal.Month(2020, 3)
 
 
 def test_len(months):

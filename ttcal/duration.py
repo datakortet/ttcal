@@ -28,7 +28,7 @@ class Period(object):
     def __eq__(self, other):
         return self.months == other.months
 
-    def __neq__(self, other):
+    def __ne__(self, other):
         return self.months != other.months
 
     def __gt__(self, other):

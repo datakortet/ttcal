@@ -3,8 +3,15 @@ from __future__ import print_function
 import ttcal
 
 
+def test_repr():
+    assert repr(ttcal.Period(months=1)) == "Period(1 months)"
+    assert repr(ttcal.Period(months=13)) == "Period(1 years, 1 months)"
+    assert repr(ttcal.Period(years=1, months=1)) == "Period(1 years, 1 months)"
+
+
 def test_period_cmp():
     assert ttcal.Period(months=5) == ttcal.Period(months=5)
+    assert not ttcal.Period(months=5) == ttcal.Period(months=4)
     assert ttcal.Period(months=4) != ttcal.Period(months=5)
     assert ttcal.Period(months=4) < ttcal.Period(months=5)
     assert ttcal.Period(months=4) <= ttcal.Period(months=5)

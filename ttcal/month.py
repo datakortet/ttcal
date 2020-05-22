@@ -92,7 +92,7 @@ class Month(object):   # pylint:disable=too-many-public-methods
                return ttcal.Year().december(23)
 
         """
-        if daynum is None:  # pragma:nocover
+        if daynum is None:  # pragma: nocover
             return self  # for when django tries to do value = value() *sigh*
         return Day(self.year, self.month, daynum)
 
@@ -296,6 +296,8 @@ class Month(object):   # pylint:disable=too-many-public-methods
                     day.mark += value
                 else:
                     day.mark = value
+            else:  # pragma: nocover
+                pass
 
         except KeyError:  # pragma:nocover
             pass
