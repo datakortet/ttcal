@@ -6,7 +6,7 @@ import datetime
 import re
 import six
 from .calfns import rangecmp, rangetuple
-from .duration import Duration
+from .duration import Duration, Period
 
 
 class fstr(str):
@@ -228,6 +228,8 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         return self.year, self.month, self.day
 
     def __add__(self, n):
+        if isinstance(n, Period):
+            return n.add_to_day(Day, self)
         return Day.fromordinal(self.toordinal() + n)
 
     # make first and last properties, because

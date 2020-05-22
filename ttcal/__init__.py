@@ -4,7 +4,7 @@
 """
 __version__ = '1.0.6'
 from .day import Day, Days, Today
-from .duration import Duration
+from .duration import Duration, Period
 from .calfns import chop, isoweek
 from .month import Month
 from .week import Week

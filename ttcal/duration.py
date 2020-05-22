@@ -5,8 +5,44 @@ import datetime
 import re
 
 
+class Period(object):
+    """A semantic time period which doesn't need to be of fixed duration,
+       e.g. a month or a year.
+    """
+    def __init__(self, years=0, months=0):
+        self.months = months + 12 * years
+
+    def add_to_day(self, cls, d):
+        ym = d.Month + self.months
+        return cls(ym.year, ym.month, min(d.day, ym.daycount))
+
+    def __repr__(self):
+        if self.months >= 12:
+            return "Period(%d years, %d months)" % divmod(self.months, 12)
+        else:
+            return "Period(%d months)" % self.months
+
+    def __add__(self, other):
+        return Period(months=self.months + other.months)
+
+    def __eq__(self, other):
+        return self.months == other.months
+
+    def __neq__(self, other):
+        return self.months != other.months
+
+    def __gt__(self, other):
+        return self.months > other.months
+
+    def __ge__(self, other):
+        return self.months >= other.months
+
+    def __lt__(self, other):
+        return self.months < other.months
+
+
 class Duration(datetime.timedelta):
-    """A duration of time.
+    """A fixed duration of time.
     """
 
     @classmethod
