@@ -1,7 +1,7 @@
 
 
-ttcal - UNKNOWN
-===============
+ttcal - calendar operations
+===========================
 
 .. image:: https://travis-ci.org/datakortet/ttcal.svg?branch=master
     :target: https://travis-ci.org/datakortet/ttcal
@@ -20,5 +20,5 @@ ttcal - UNKNOWN
 .. image:: https://codecov.io/gl/norsktest/ttcal/branch/master/graph/badge.svg?token=AU6BBD04LY
   :target: https://codecov.io/gl/norsktest/ttcal
 
-.. include:: badge-wheel.rst
+
 
