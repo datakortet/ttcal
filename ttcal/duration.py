@@ -16,6 +16,10 @@ class Period(object):
         ym = d.Month + self.months
         return cls(ym.year, ym.month, min(d.day, ym.daycount))
 
+    def sub_from_day(self, cls, d):
+        ym = d.Month - self.months
+        return cls(ym.year, ym.month, min(d.day, ym.daycount))
+
     def __repr__(self):
         if self.months >= 12:
             return "Period(%d years, %d months)" % divmod(self.months, 12)

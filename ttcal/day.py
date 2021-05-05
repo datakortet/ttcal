@@ -261,6 +261,8 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         """
         if isinstance(x, Day):
             return self.toordinal() - x.toordinal()
+        elif isinstance(x, Period):
+            return x.sub_from_day(Day, self)
         elif isinstance(x, Duration):
             return Day.fromordinal(self.toordinal() - x.days)
         elif isinstance(x, six.integer_types):
