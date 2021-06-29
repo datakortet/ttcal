@@ -15,3 +15,24 @@ coverage:
 wheel:
   dependencies:
     - py35dj18
+
+
+deploy_code:
+  stage: deploy
+  image: thebjorn/dktestpackage3:latest
+  before_script:
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$DEPLOY_PKEY")
+    - mkdir -p ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  script:
+    - export STATIC_DIR="$(dk pkg -a static_dir)/"
+    - ssh deploy@echtman.datakortet.c.bitbit.net 'cd /srv && source go && dk -h'
+  environment:
+    name: production
+    url: https://admin.datakortet.no/userenv/
+  when: manual
+  only:
+    - master
+    - pushes
+    - web
