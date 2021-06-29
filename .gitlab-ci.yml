@@ -27,7 +27,7 @@ deploy_code:
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
     - dk pkg
-    - ssh deploy@fischer.datakortet.c.bitbit.net 'cd /srv && source ./go && dk -h'
+    - ssh -v deploy@fischer.datakortet.c.bitbit.net "cd /srv/lib/core/ttcal && git pull"
   environment:
     name: production
     url: https://admin.datakortet.no/userenv/
