@@ -26,8 +26,8 @@ deploy_code:
     - mkdir -p ~/.ssh
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
-    - export STATIC_DIR="$(dk pkg -a static_dir)/"
-    - ssh deploy@echtman.datakortet.c.bitbit.net 'cd /srv && source go && dk -h'
+    - dk pkg
+    - ssh deploy@echtman.datakortet.c.bitbit.net 'cd /srv && source ./go && dk -h'
   environment:
     name: production
     url: https://admin.datakortet.no/userenv/
