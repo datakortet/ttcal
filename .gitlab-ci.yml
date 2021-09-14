@@ -3,25 +3,6 @@ include:
   - project: 'norsktest/dktools'
     file: '/ci-templates/dkbuild.yml'
 
-py35dj18:
-  extends: .testpackage
-  script:
-    - dk testpackage --ci --tag=py35-dj18 --django=1.8.19
-
-py35dj19:
-  extends: .testpackage
-  after_script: []
-  script:
-    - dk testpackage --ci --tag=py35-dj19 --django=1.9.13
-
-coverage:
-  dependencies:
-    - py35dj18
-
-wheel:
-  dependencies:
-    - py35dj18
-
 
 deploy_code:
   stage: deploy
