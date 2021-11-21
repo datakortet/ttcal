@@ -1,5 +1,4 @@
-django==1.8.19                 ; python_version < '3.0'
+django==1.8.19                 ; python_version < '3.0' # WARNING[dkt]: missing filter django  ; 
 Django==1.11.23                ; python_version >= '3.4' # WARNING[dkt]: Django==1.11.23 version mismatch! Should be MISSING (requirements-external.txt)
 future==0.18.1
-six==1.12.0
-
+six==1.15.0
