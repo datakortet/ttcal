@@ -1,0 +1,4 @@
+build:
+  django: 1.8.19
+  future: 0.18.1
+  six: 1.15.0
