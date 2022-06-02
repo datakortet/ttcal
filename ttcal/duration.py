@@ -110,6 +110,14 @@ class Duration(datetime.timedelta):
 
         return res * scale
 
+    @classmethod
+    def from_secs(cls, s):
+        minutes, secs = divmod(s, 60)
+        hours, minutes = divmod(minutes, 60)
+        days, hours = divmod(hours, 24)
+        return cls(days=days, hours=hours, minutes=minutes, seconds=secs)
+
+
     def __new__(cls, *args, **kw):
         if len(args) == 1 and isinstance(args[0], datetime.timedelta):
             years = 0
