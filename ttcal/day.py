@@ -63,10 +63,10 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
             # d2008022002
             y, m, d = map(int, fstr(tag).split(1, 5, 7)[1:])
             return cls(y, m, d, membermonth=m)
-        else:
-            # d2008022002
-            y, m, d, b = map(int, fstr(tag).split(1, 5, 7, 9)[1:])
-            return cls(y, m, d, membermonth=b)
+
+        # d2008022002
+        y, m, d, b = map(int, fstr(tag).split(1, 5, 7, 9)[1:])
+        return cls(y, m, d, membermonth=b)
 
     @classmethod
     def parse(cls, strval):
@@ -167,8 +167,7 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         """
         if length is None:
             return Day.day_name[daynum]
-        else:
-            return Day.day_name[daynum][:length]
+        return Day.day_name[daynum][:length]
 
     def range(self):
         """Return an iterator for the range of `self`.
@@ -202,14 +201,8 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         return '%d-%d-%d-%d' % (self.year, self.month, self.day,
                                 self.membermonth)
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%04d-%02d-%02d' % (self.year, self.month, self.day)
-
-    def __str__(self):  # pragma:nocover
-        if six.PY2:
-            return self.__unicode__().encode('u8')
-        elif six.PY3:
-            return self.__unicode__()
 
     def datetime(self, hour=0, minute=0, second=0):
         """Extend `self` to datetime.
@@ -261,15 +254,15 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         """
         if isinstance(x, Day):
             return self.toordinal() - x.toordinal()
-        elif isinstance(x, Period):
+        if isinstance(x, Period):
             return x.sub_from_day(Day, self)
-        elif isinstance(x, Duration):
+        if isinstance(x, Duration):
             return Day.fromordinal(self.toordinal() - x.days)
-        elif isinstance(x, six.integer_types):
+        if isinstance(x, six.integer_types):
             return Day.fromordinal(self.toordinal() - x)
-        else:
-            raise ValueError('Wrong operands for subtraction: %s and %s'
-                             % (type(self), type(x)))
+
+        raise ValueError('Wrong operands for subtraction: %s and %s'
+                            % (type(self), type(x)))
 
     @property
     def dayname(self):
@@ -345,13 +338,13 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
                                     self.membermonth)
 
     @property
-    def today(self):
+    def today(self):  # pylint:disable=arguments-differ,invalid-overridden-method
         """True if self is today.
         """
         return self.compare(datetime.date.today()) == 'day'
 
     @property
-    def weekday(self):
+    def weekday(self):  # pylint:disable=invalid-overridden-method
         """True if self is a weekday.
         """
         return calendar.weekday(self.year, self.month, self.day)
@@ -385,12 +378,9 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
             if self.month == other.month:
                 if self.day == other.day:
                     return 'day'
-                else:
-                    return 'month'
-            else:
-                return 'year'
-        else:
-            return None
+                return 'month'
+            return 'year'
+        return None
 
     def _format(self, fmtchars):
         # http://blog.tkbe.org/archive/date-filter-cheat-sheet/
@@ -413,7 +403,7 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         }
         ch = ""
         for ch in fmtchars:
-            yield simplefmt.get(ch, lambda: ch)()
+            yield simplefmt.get(ch, lambda ch=ch: ch)()
 
     def format(self, fmt=None):
         """Emulate Django's date filter.
@@ -482,7 +472,7 @@ class Days(list):
     """
 
     def __init__(self, start, end, start_week=False):
-        super(Days, self).__init__()
+        super().__init__()
         assert start <= end
         if start_week:
             start = start - start.weekday  # set to monday

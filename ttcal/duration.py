@@ -5,7 +5,7 @@ import datetime
 import re
 
 
-class Period(object):
+class Period:
     """A semantic time period which doesn't need to be of fixed duration,
        e.g. a month or a year.
     """
@@ -23,8 +23,7 @@ class Period(object):
     def __repr__(self):
         if self.months >= 12:
             return "Period(%d years, %d months)" % divmod(self.months, 12)
-        else:
-            return "Period(%d months)" % self.months
+        return "Period(%d months)" % self.months
 
     def __add__(self, other):
         return Period(months=self.months + other.months)
@@ -116,7 +115,6 @@ class Duration(datetime.timedelta):
         hours, minutes = divmod(minutes, 60)
         days, hours = divmod(hours, 24)
         return cls(days=days, hours=hours, minutes=minutes, seconds=secs)
-
 
     def __new__(cls, *args, **kw):
         if len(args) == 1 and isinstance(args[0], datetime.timedelta):
