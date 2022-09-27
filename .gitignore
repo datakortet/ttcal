@@ -1,4 +1,7 @@
 
+# this is a published package, don't check in editor folders
+.idea/
+
 # dk specific ignores..
 .md5
 *~

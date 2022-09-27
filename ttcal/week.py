@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Week class.
 """
@@ -7,7 +6,7 @@ from .day import Day, Days
 from .calfns import isoweek, rangecmp, rangetuple
 
 
-class Week(object):
+class Week:
     """A single week in a Year.
     """
     year = None
@@ -64,7 +63,7 @@ class Week(object):
         return cls(days, month)
 
     def __init__(self, days, month):
-        super(Week, self).__init__()
+        super().__init__()
         # thursday is always in the correct iso-year per definition
         t = days[3].isocalendar()
         self.year = t[0]
@@ -104,7 +103,7 @@ class Week(object):
         return 'Uke %d (%d)' % (self.num, self.year)
 
     def __repr__(self):
-        return 'Week(%s, month=%s, year=%s)' % (self.num, self.month, self.year)
+        return f'Week({self.num}, month={self.month}, year={self.year})'
 
     def __iter__(self):
         return iter(self.days)

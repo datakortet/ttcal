@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-"""Extension of datetime.timedelta.
+"""
+Extension of datetime.timedelta.
 """
 import datetime
 import re
@@ -133,7 +133,7 @@ class Duration(datetime.timedelta):
 
         # an average year is 365.2425 days..
         leap_days = int(365.2425 * years - 365 * years)
-        obj = super(Duration, cls).__new__(cls,
+        obj = super().__new__(cls,
                                            days=days + years * 365,
                                            hours=hours + leap_days,
                                            minutes=minutes,
@@ -178,9 +178,6 @@ class Duration(datetime.timedelta):
     def __str__(self):      # pragma: nocover
         return '%s%d:%02d:%02d' % self.duration_tuple()
 
-    def __unicode__(self):      # pragma: nocover
-        return u'%s%d:%02d:%02d' % self.duration_tuple()
-
     def toint(self):
         """Convert self to integer.
         """
@@ -193,7 +190,7 @@ class Duration(datetime.timedelta):
             return other.__req__(self)
 
         if isinstance(other, datetime.timedelta):
-            return super(Duration, self).__eq__(other)
+            return super().__eq__(other)
 
         # if isinstance(other, Duration):
         #     return self.duration_tuple() == other.duration_tuple()
@@ -208,7 +205,7 @@ class Duration(datetime.timedelta):
             return other.__rne__(self)
 
         if isinstance(other, datetime.timedelta):
-            return super(Duration, self).__ne__(other)
+            return super().__ne__(other)
 
         # if isinstance(other, Duration):
         #     return self.duration_tuple() != other.duration_tuple()
@@ -222,7 +219,7 @@ class Duration(datetime.timedelta):
         if hasattr(other, '__rlt__'):
             return other.__rlt__(self)
         if isinstance(other, datetime.timedelta):
-            return super(Duration, self).__lt__(other)
+            return super().__lt__(other)
         if hasattr(other, 'toint'):
             return self.toint() < other.toint()
         return False
@@ -231,7 +228,7 @@ class Duration(datetime.timedelta):
         if hasattr(other, '__rle__'):
             return other.__rle__(self)
         if isinstance(other, datetime.timedelta):
-            return super(Duration, self).__le__(other)
+            return super().__le__(other)
         if hasattr(other, 'toint'):
             return self.toint() <= other.toint()
         return False
@@ -240,7 +237,7 @@ class Duration(datetime.timedelta):
         if hasattr(other, '__rgt__'):
             return other.__rgt__(self)
         if isinstance(other, datetime.timedelta):
-            return super(Duration, self).__gt__(other)
+            return super().__gt__(other)
         if isinstance(other, int):
             return self.toint() > other
         if hasattr(other, 'toint'):
@@ -251,19 +248,19 @@ class Duration(datetime.timedelta):
         if hasattr(other, '__rge__'):
             return other.__rge__(self)
         if isinstance(other, datetime.timedelta):
-            return super(Duration, self).__ge__(other)
+            return super().__ge__(other)
         if hasattr(other, 'toint'):
             return self.toint() >= other.toint()
         return False
 
     def __mul__(self, other):
-        return Duration(super(Duration, self).__mul__(other))
+        return Duration(super().__mul__(other))
 
     def __add__(self, other):
-        return Duration(super(Duration, self).__add__(other))
+        return Duration(super().__add__(other))
 
     def __sub__(self, other):
-        return Duration(super(Duration, self).__sub__(other))
+        return Duration(super().__sub__(other))
 
     def __div__(self, other):       # pragma: nocover
         # this one is called for Python 2.7
@@ -272,7 +269,7 @@ class Duration(datetime.timedelta):
                 return float(self.toint()) / float(other.toint())
             except ZeroDivisionError:
                 return 0.0
-        return Duration(super(Duration, self).__div__(other))
+        return Duration(super().__div__(other))
 
     def __truediv__(self, other):   # pragma: nocover
         # this one is used for Python 3+
@@ -281,7 +278,7 @@ class Duration(datetime.timedelta):
                 return int(float(self.toint()) / float(other.toint()))
             except ZeroDivisionError:
                 return 0
-        return Duration(super(Duration, self).__truediv__(other))
+        return Duration(super().__truediv__(other))
 
     # def __rsub__(self, other):
     #     return other.__sub__(self)

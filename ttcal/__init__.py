@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-
-"""Date classes (originally from TikTok).
+"""
+Date classes (originally from TikTok).
 """
 __version__ = '1.0.8'
 from .day import Day, Days, Today

@@ -1,19 +1,17 @@
-# -*- coding: utf-8 -*-
 """
 Year class.
 """
-from builtins import str   # pylint:disable=redefined-builtin
 import datetime
 from .calfns import chop, rangecmp, rangetuple
 from .day import Day
 from .month import Month
 
 
-class Year(object):    # pylint:disable=too-many-public-methods
+class Year:    # pylint:disable=too-many-public-methods
     """A single year.
     """
     def __init__(self, year=None):
-        super(Year, self).__init__()
+        super().__init__()
         if year is None:
             year = datetime.date.today().year
         self.year = year
@@ -144,8 +142,7 @@ class Year(object):    # pylint:disable=too-many-public-methods
         """Yield all 'marked' days in year.
         """
         for m in self.months:
-            for day in m.marked_days():
-                yield day
+            yield from m.marked_days()
 
     def datetuple(self):
         """January 1.
@@ -274,8 +271,7 @@ class Year(object):    # pylint:disable=too-many-public-methods
         """Yield all days in all months in year.
         """
         for m in self.months:
-            for d in m.days():
-                yield d
+            yield from m.days()
 
     def rows(self):
         """Return a year calendar layout (3x4).

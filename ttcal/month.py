@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Month operations.
 """
@@ -10,7 +9,7 @@ from .week import Week
 from .calfns import chop, rangecmp, rangetuple
 
 
-class Month(object):   # pylint:disable=too-many-public-methods
+class Month:   # pylint:disable=too-many-public-methods
     """A calendar month.
     """
 
@@ -54,14 +53,14 @@ class Month(object):   # pylint:disable=too-many-public-methods
             """, re.VERBOSE)
         m = mnth_matcher.match(txt)
         if not m:
-            msg = u"Ugyldig format, må være åååå-mm, ikke %r." % txt
+            msg = "Ugyldig format, må være åååå-mm, ikke %r." % txt
             raise ValueError(msg.encode('u8'))
         mnth_groups = m.groupdict()
 
         return cls(int(mnth_groups["year"]), int(mnth_groups["month"]))
 
     def __init__(self, year=None, month=None, date=None):
-        super(Month, self).__init__()
+        super().__init__()
         if date is not None:
             self.year = date.year
             self.month = date.month
@@ -102,13 +101,13 @@ class Month(object):   # pylint:disable=too-many-public-methods
         return Month, (self.year, self.month)
 
     def __unicode__(self):      # pragma: nocover
-        return u"%04d-%02d" % (self.year, self.month)
+        return "%04d-%02d" % (self.year, self.month)
 
     def __str__(self):      # pragma: nocover
         return '%04d-%02d' % (self.year, self.month)
 
     def __repr__(self):
-        return 'Month(%s, %s)' % (self.year, self.month)
+        return f'Month({self.year}, {self.month})'
 
     # @property
     # def Year(self):
@@ -220,8 +219,7 @@ class Month(object):   # pylint:disable=too-many-public-methods
         """Iterator over days in each week of month.
         """
         for wk in iter(self.weeks):
-            for day in wk:
-                yield day
+            yield from wk
 
     def days(self):
         """Return a list of days (`class`:ttcal.Day) in this month.

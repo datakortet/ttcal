@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
-
 """Tags to manipulate ttcal objects in templates.
 """
-from __future__ import print_function
 from django import template
 
 

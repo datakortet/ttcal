@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Date (single day) operations.
 """
 import calendar
@@ -44,8 +43,8 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
     """A calendar date.
     """
 
-    day_name = u'''mandag tirsdag onsdag torsdag fredag
-                   lørdag søndag'''.split()
+    day_name = '''mandag tirsdag onsdag torsdag fredag
+                  lørdag søndag'''.split()
 
     day_code = "M U W H F A S".split()
 
@@ -135,8 +134,8 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         elif g['two']:
             prefix = 'two'
 
-        day, month, year = [int(g['%s_%s' % (prefix, val)])
-                            for val in ['day', 'mnth', 'yr']]
+        day, month, year = (int(g[f'{prefix}_{val}'])
+                            for val in ['day', 'mnth', 'yr'])
 
         if year < 13:
             raise ValueError("Cannot parse %r as date." % strval)
@@ -157,7 +156,7 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         else:
             raise TypeError('incorrect number of arguments')
 
-        obj = super(Day, cls).__new__(cls, y, m, d)
+        obj = super().__new__(cls, y, m, d)
         obj.membermonth = kw.get('membermonth', obj.month)
         return obj
 
@@ -202,7 +201,7 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
                                 self.membermonth)
 
     def __str__(self):
-        return u'%04d-%02d-%02d' % (self.year, self.month, self.day)
+        return '%04d-%02d-%02d' % (self.year, self.month, self.day)
 
     def datetime(self, hour=0, minute=0, second=0):
         """Extend `self` to datetime.
@@ -258,7 +257,7 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
             return x.sub_from_day(Day, self)
         if isinstance(x, Duration):
             return Day.fromordinal(self.toordinal() - x.days)
-        if isinstance(x, six.integer_types):
+        if isinstance(x, int):
             return Day.fromordinal(self.toordinal() - x)
 
         raise ValueError('Wrong operands for subtraction: %s and %s'
@@ -460,7 +459,7 @@ class Today(Day):
     def __new__(cls, *args, **kw):
         t = datetime.date.today()
         y, m, d = t.year, t.month, t.day
-        obj = super(Today, cls).__new__(cls, y, m, d)
+        obj = super().__new__(cls, y, m, d)
         obj.membermonth = obj.month
         return obj
 
