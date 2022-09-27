@@ -100,9 +100,6 @@ class Month:   # pylint:disable=too-many-public-methods
         """
         return Month, (self.year, self.month)
 
-    def __unicode__(self):      # pragma: nocover
-        return f"{int(self.year):04}-{int(self.month):02}"
-
     def __str__(self):      # pragma: nocover
         return f'{int(self.year):04}-{int(self.month):02}'
 

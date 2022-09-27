@@ -3,7 +3,6 @@
 import calendar
 import datetime
 import re
-import six
 from .calfns import rangecmp, rangetuple
 from .duration import Duration, Period
 
@@ -197,8 +196,10 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         return hash(f'{self.year:04}{self.month:02}{self.day:02}')
 
     def __repr__(self):
-        return '%d-%d-%d-%d' % (self.year, self.month, self.day,
-                                self.membermonth)
+        return '%d-%d-%d-%d' % (    # pylint:disable=C0209
+            self.year, self.month, self.day,
+            self.membermonth
+        )
 
     def __str__(self):
         return f'{self.year:04}-{self.month:02}-{self.day:02}'
@@ -332,8 +333,10 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
     def idtag(self):
         """Return the idtag for `self`: dyyyymmddmm.
         """
-        return 'd%d%02d%02d%02d' % (self.year, self.month, self.day,
-                                    self.membermonth)
+        return 'd%d%02d%02d%02d' % (  # pylint:disable=C0209
+            self.year, self.month, self.day,
+            self.membermonth
+        )
 
     @property
     def today(self):  # pylint:disable=arguments-differ,invalid-overridden-method

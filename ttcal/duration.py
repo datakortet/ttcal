@@ -22,7 +22,7 @@ class Period:
 
     def __repr__(self):
         if self.months >= 12:
-            return "Period(%d years, %d months)" % divmod(self.months, 12)
+            return f"Period({self.months//12} years, {self.months%12} months)"
         return f"Period({self.months} months)"
 
     def __add__(self, other):
@@ -142,7 +142,7 @@ class Duration(datetime.timedelta):
 
     def __repr__(self):
         dt = self.duration_tuple()
-        return '%sDuration(hours=%d, minutes=%d, seconds=%d)' % dt
+        return '%sDuration(hours=%d, minutes=%d, seconds=%d)' % dt  # pylint:disable=C0209
 
     def duration_tuple(self):
         """Return self as hours, minutes, seconds.
@@ -176,7 +176,7 @@ class Duration(datetime.timedelta):
         return int(sgn == "") * sc
 
     def __str__(self):      # pragma: nocover
-        return '%s%d:%02d:%02d' % self.duration_tuple()
+        return '%s%d:%02d:%02d' % self.duration_tuple()  # pylint:disable=C0209
 
     def toint(self):
         """Convert self to integer.

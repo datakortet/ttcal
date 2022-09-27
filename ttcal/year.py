@@ -103,9 +103,6 @@ class Year:    # pylint:disable=too-many-public-methods
     #     t = datetime.time()
     #     return datetime.datetime.combine(d, t)
 
-    def __unicode__(self):      # pragma: nocover
-        return str(self.year)
-
     def __repr__(self):
         return f'Year({self.year})'
 
