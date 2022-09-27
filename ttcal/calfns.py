@@ -28,9 +28,9 @@ def isoweek(year, week):
     day1 = wk1date.toordinal() - weekday
 
     # first day in week
-    start = day1 + (week - 1) * 7
+    start = day1 + (week-1) * 7
     # one past last day in week
-    stop = day1 + week * 7
+    stop = day1 + week*7
 
     for n in range(start, stop):
         yield datetime.date.fromordinal(n)
@@ -42,13 +42,10 @@ def rangetuple(x):
     if hasattr(x, 'rangetuple'):
         return x.rangetuple()
     if isinstance(x, datetime.date):
-        return (
-            datetime.datetime.combine(x, datetime.time()),
-            datetime.datetime.combine(
-                datetime.date.fromordinal(1 + x.toordinal()),
-                datetime.time()
-            )
-        )
+        return (datetime.datetime.combine(x, datetime.time()),
+                datetime.datetime.combine(
+                    datetime.date.fromordinal(1 + x.toordinal()),
+                    datetime.time()))
     return x
 
 

@@ -9,13 +9,14 @@ from .week import Week
 from .calfns import chop, rangecmp, rangetuple
 
 
-class Month:   # pylint:disable=too-many-public-methods
+class Month:  # pylint:disable=too-many-public-methods
     """A calendar month.
     """
 
-    month_name = ['', 'Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni',
-                  'Juli', 'August', 'September', 'Oktober', 'November',
-                  'Desember']
+    month_name = [
+        '', 'Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli',
+        'August', 'September', 'Oktober', 'November', 'Desember'
+    ]
     year = None
     month = None
 
@@ -48,7 +49,8 @@ class Month:   # pylint:disable=too-many-public-methods
         if not txt:
             return None
 
-        mnth_matcher = re.compile(r"""
+        mnth_matcher = re.compile(
+            r"""
             (?P<year>\d{4})-?(?P<month>\d{1,2})
             """, re.VERBOSE)
         m = mnth_matcher.match(txt)
@@ -100,7 +102,7 @@ class Month:   # pylint:disable=too-many-public-methods
         """
         return Month, (self.year, self.month)
 
-    def __str__(self):      # pragma: nocover
+    def __str__(self):  # pragma: nocover
         return f'{int(self.year):04}-{int(self.month):02}'
 
     def __repr__(self):
@@ -123,10 +125,10 @@ class Month:   # pylint:disable=too-many-public-methods
 
     # def __eq__(self, other):
     #     noinspection PyBroadException
-        # try:
-        #     return self.year == other.year and self.month == other.month
-        # except:
-        #     return False
+    # try:
+    #     return self.year == other.year and self.month == other.month
+    # except:
+    #     return False
 
     def __len__(self):
         _, n = calendar.monthrange(self.year, self.month)
@@ -191,7 +193,7 @@ class Month:   # pylint:disable=too-many-public-methods
             first, last = min(self, n), max(self, n)
             ydiff = last.year - first.year
             mdiff = last.month - first.month
-            res = 12 * ydiff + mdiff
+            res = 12*ydiff + mdiff
             if self > n:
                 return res
             return -res

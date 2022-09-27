@@ -21,7 +21,6 @@ class fstr(str):
           '2008'
 
     """
-
     def split(self, *ndxs):
         if len(ndxs) == 0:
             return [self]
@@ -39,7 +38,7 @@ class fstr(str):
         return res
 
 
-class Day(datetime.date):        # pylint:disable=too-many-public-methods
+class Day(datetime.date):  # pylint:disable=too-many-public-methods
     """A calendar date.
     """
 
@@ -197,10 +196,8 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         return hash(f'{self.year:04}{self.month:02}{self.day:02}')
 
     def __repr__(self):
-        return '%d-%d-%d-%d' % (    # pylint:disable=C0209
-            self.year, self.month, self.day,
-            self.membermonth
-        )
+        return '%d-%d-%d-%d' % (  # pylint:disable=C0209
+            self.year, self.month, self.day, self.membermonth)
 
     def __str__(self):
         return f'{self.year:04}-{self.month:02}-{self.day:02}'
@@ -262,7 +259,8 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         if isinstance(x, int):
             return Day.fromordinal(self.toordinal() - x)
 
-        raise ValueError(f'Wrong operands for subtraction: {type(self)} and {type(x)}')
+        raise ValueError(
+            f'Wrong operands for subtraction: {type(self)} and {type(x)}')
 
     @property
     def dayname(self):
@@ -335,9 +333,7 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         """Return the idtag for `self`: dyyyymmddmm.
         """
         return 'd%d%02d%02d%02d' % (  # pylint:disable=C0209
-            self.year, self.month, self.day,
-            self.membermonth
-        )
+            self.year, self.month, self.day, self.membermonth)
 
     @property
     def today(self):  # pylint:disable=arguments-differ,invalid-overridden-method
@@ -472,7 +468,6 @@ class Today(Day):
 class Days(list):
     """A contigous set of days.
     """
-
     def __init__(self, start, end, start_week=False):
         super().__init__()
         assert start <= end

@@ -7,7 +7,7 @@ from .day import Day
 from .month import Month
 
 
-class Year:    # pylint:disable=too-many-public-methods
+class Year:  # pylint:disable=too-many-public-methods
     """A single year.
     """
     def __init__(self, year=None):
@@ -106,7 +106,7 @@ class Year:    # pylint:disable=too-many-public-methods
     def __repr__(self):
         return f'Year({self.year})'
 
-    def __str__(self):      # pragma: nocover
+    def __str__(self):  # pragma: nocover
         return str(self.year)
 
     @property

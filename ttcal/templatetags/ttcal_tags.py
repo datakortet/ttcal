@@ -1,7 +1,7 @@
-"""Tags to manipulate ttcal objects in templates.
+"""
+Tags to manipulate ttcal objects in templates.
 """
 from django import template
-
 
 register = template.Library()
 

@@ -10,7 +10,7 @@ class Period:
        e.g. a month or a year.
     """
     def __init__(self, years=0, months=0):
-        self.months = months + 12 * years
+        self.months = months + 12*years
 
     def add_to_day(self, cls, d):
         ym = d.Month + self.months
@@ -47,7 +47,6 @@ class Period:
 class Duration(datetime.timedelta):
     """A fixed duration of time.
     """
-
     @classmethod
     def sum(cls, sequence, start=None):
         """Return the sum of sequence.
@@ -101,11 +100,10 @@ class Duration(datetime.timedelta):
             time_groups[key] = int(time_groups[key]) if time_groups[key] else 0
         time_groups["days"] = time_groups["days"] + (time_groups["weeks"] * 7)
 
-        res = cls(
-            days=time_groups["days"],
-            hours=time_groups["hours"],
-            minutes=time_groups["minutes"],
-            seconds=time_groups["seconds"])
+        res = cls(days=time_groups["days"],
+                  hours=time_groups["hours"],
+                  minutes=time_groups["minutes"],
+                  seconds=time_groups["seconds"])
 
         return res * scale
 
@@ -132,12 +130,12 @@ class Duration(datetime.timedelta):
             seconds = kw.get('seconds', 0)
 
         # an average year is 365.2425 days..
-        leap_days = int(365.2425 * years - 365 * years)
+        leap_days = int(365.2425*years - 365*years)
         obj = super().__new__(cls,
-                                           days=days + years * 365,
-                                           hours=hours + leap_days,
-                                           minutes=minutes,
-                                           seconds=seconds)
+                              days=days + years*365,
+                              hours=hours + leap_days,
+                              minutes=minutes,
+                              seconds=seconds)
         return obj
 
     def __repr__(self):
@@ -166,7 +164,7 @@ class Duration(datetime.timedelta):
         """The number of hours in self (not including days).
         """
         sgn, hr, _mn, _sc = self.duration_tuple()
-        return int(sgn == "") * (hr % 24)
+        return int(sgn == "") * (hr%24)
 
     @property
     def mins(self):
@@ -182,7 +180,7 @@ class Duration(datetime.timedelta):
         sgn, _hr, _mn, sc = self.duration_tuple()
         return int(sgn == "") * sc
 
-    def __str__(self):      # pragma: nocover
+    def __str__(self):  # pragma: nocover
         return '%s%d:%02d:%02d' % self.duration_tuple()  # pylint:disable=C0209
 
     def toint(self):
@@ -269,7 +267,7 @@ class Duration(datetime.timedelta):
     def __sub__(self, other):
         return Duration(super().__sub__(other))
 
-    def __div__(self, other):       # pragma: nocover
+    def __div__(self, other):  # pragma: nocover
         # this one is called for Python 2.7
         if isinstance(other, Duration):
             try:
@@ -278,7 +276,7 @@ class Duration(datetime.timedelta):
                 return 0.0
         return Duration(super().__div__(other))
 
-    def __truediv__(self, other):   # pragma: nocover
+    def __truediv__(self, other):  # pragma: nocover
         # this one is used for Python 3+
         if isinstance(other, Duration):
             try:
