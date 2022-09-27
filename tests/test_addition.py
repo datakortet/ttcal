@@ -61,6 +61,7 @@ def test_add_month_lastday():
     assert jan31 + months3 == ttcal.Day(2020, 4, 30)
     assert jan31 + months4 == ttcal.Day(2020, 5, 31)
     assert jan31 + months5 == ttcal.Day(2020, 6, 30)
+    assert jan31 - months1 == ttcal.Day(2019, 12, 31)
 
     # assert ttcal.Period(months=1) + ttcal.Period(months=1) == ttcal.Period(months=2)
 

@@ -1,4 +1,5 @@
-"""Date (single day) operations.
+"""
+Date (single day) operations.
 """
 import calendar
 import datetime

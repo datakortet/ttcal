@@ -156,10 +156,17 @@ class Duration(datetime.timedelta):
 
     @property
     def hrs(self):
-        """The number of hours in self.
+        """The number of hours in self (including days).
         """
         sgn, hr, _mn, _sc = self.duration_tuple()
         return int(sgn == "") * hr
+
+    @property
+    def hours(self):
+        """The number of hours in self (not including days).
+        """
+        sgn, hr, _mn, _sc = self.duration_tuple()
+        return int(sgn == "") * (hr % 24)
 
     @property
     def mins(self):

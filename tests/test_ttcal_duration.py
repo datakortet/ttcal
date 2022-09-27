@@ -107,7 +107,16 @@ def test_repr(dd):
     assert repr(dd[1]) == 'Duration(hours=1, minutes=10, seconds=0)'
 
 
+def test_fromsecs():
+    d = ttcal.Duration.from_secs(3*24*60*60 + 16*60*60 + 4*60 + 36)
+    assert d.secs == 36
+    assert d.mins == 4
+    assert d.hours == 16
+    assert d.days == 3
+
+
 def test_accessors(dd):
+    # ttcal.Duration(days=1, hours=3, minutes=14, seconds=20),
     assert dd[0].hrs == 27
     assert dd[0].mins == 14
     assert dd[0].secs == 20
