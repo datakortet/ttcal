@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-from datetime import date, datetime, timedelta
-from unittest import TestCase
+from datetime import timedelta
 import ttcal
 import pytest
 from ttcal import Day

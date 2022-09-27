@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-
-"""Test that all modules are importable.
+"""
+Test that all modules are importable.
 """
 
 import ttcal.calfns

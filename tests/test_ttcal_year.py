@@ -1,13 +1,6 @@
-# -*- coding: utf-8 -*-
-from __future__ import print_function, unicode_literals
 from datetime import date, datetime
 import ttcal
 import pytest
-
-try:
-    unicode
-except NameError:  # pragma: nocover
-    unicode = str
 
 
 @pytest.fixture
@@ -20,7 +13,6 @@ def years():
 
 
 def test_stringification(years):
-    assert unicode(years[0]) == '2005'
     assert str(years[0]) == '2005'
 
 

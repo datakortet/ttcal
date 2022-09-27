@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 from datetime import date, datetime
 from unittest import TestCase
 import pickle
-import six
 import ttcal
 import pytest
 
@@ -135,7 +133,7 @@ class TestDay(TestCase):
     def test_unicode_(self):
         """Test of the __unicode__ method.
         """
-        assert six.text_type(self.day2) == six.u('2012-04-08')
+        assert str(self.day2) == '2012-04-08'
 
     def test_datetuple(self):
         """Test of the datetuple method.
@@ -156,7 +154,7 @@ class TestDay(TestCase):
         """Test of the day_name property.
         """
         assert self.day1.dayname == 'tirsdag'
-        assert self.day2.dayname == u'søndag'
+        assert self.day2.dayname == 'søndag'
 
     def test_code(self):
         """Test of the code property.
@@ -251,7 +249,7 @@ class TestDay(TestCase):
         assert self.day1.format('w') == '1'
         assert self.day1.format('D-n') == 'tir-4'
         assert self.day1.format('z') == '100'
-        assert self.day1.format() == u'Apr 10, 2012'
+        assert self.day1.format() == 'Apr 10, 2012'
 
     def test_from_idtag(self):
         """Test the from_idtag method.

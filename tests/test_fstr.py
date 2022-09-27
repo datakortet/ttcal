@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 "core.fstr"
 
 # pylint:disable=R0904

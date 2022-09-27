@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from ttcal import Today, Year, Month, Day
 from ttcal.templatetags.ttcal_tags import surround, chop_at_now, previous, is_current
 

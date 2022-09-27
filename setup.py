@@ -7,13 +7,10 @@ ttcal - calendar operations
 """
 
 classifiers = """\
-Development Status :: 3 - Alpha
+Development Status :: 5 - Production/Stable
 Intended Audience :: Developers
 Programming Language :: Python
-Programming Language :: Python :: 2
-Programming Language :: Python :: 2.7
-Programming Language :: Python :: 3.4
-Programming Language :: Python :: 3.6
+Programming Language :: Python :: 3
 Topic :: Software Development :: Libraries
 """
 
@@ -33,10 +30,7 @@ setuptools.setup(
     author='Bjorn Pettersen',
     author_email='bp@datakortet.no',
     requires=[],
-    install_requires=[
-        'six',
-        'future',
-    ],
+    install_requires=[],
     # description=__doc__.strip(),
     long_description=description,
     classifiers=[line for line in classifiers.split('\n') if line],
