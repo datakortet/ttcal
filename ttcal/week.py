@@ -80,7 +80,7 @@ class Week:
     def idtag(self):
         """Return a tag representing this week.
         """
-        return 'w%d%d' % (self.year, self.num)
+        return f'w{self.year}{self.num}'
 
     @property
     def first(self):
@@ -100,7 +100,7 @@ class Week:
         return self.year, self.month, self.first.day
 
     def __str__(self):
-        return 'Uke %d (%d)' % (self.num, self.year)
+        return f'Uke {self.num} ({self.year})'
 
     def __repr__(self):
         return f'Week({self.num}, month={self.month}, year={self.year})'

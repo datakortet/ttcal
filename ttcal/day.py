@@ -115,7 +115,7 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         """, re.VERBOSE)
         m = datere.match(strval)
         if not m:
-            raise ValueError("Cannot parse %r as date." % strval)
+            raise ValueError(f"Cannot parse {strval!r} as date.")
         prefix = ''
 
         g = m.groupdict()
@@ -138,7 +138,7 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
                             for val in ['day', 'mnth', 'yr'])
 
         if year < 13:
-            raise ValueError("Cannot parse %r as date." % strval)
+            raise ValueError(f"Cannot parse {strval!r} as date.")
         if year < 100:
             year += 2000
 
@@ -194,14 +194,14 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         return Day.fromordinal(middle)
 
     def __hash__(self):
-        return hash('%04s%02s%02s' % (self.year, self.month, self.day))
+        return hash(f'{self.year:04}{self.month:02}{self.day:02}')
 
     def __repr__(self):
         return '%d-%d-%d-%d' % (self.year, self.month, self.day,
                                 self.membermonth)
 
     def __str__(self):
-        return '%04d-%02d-%02d' % (self.year, self.month, self.day)
+        return f'{self.year:04}-{self.month:02}-{self.day:02}'
 
     def datetime(self, hour=0, minute=0, second=0):
         """Extend `self` to datetime.
@@ -260,8 +260,7 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
         if isinstance(x, int):
             return Day.fromordinal(self.toordinal() - x)
 
-        raise ValueError('Wrong operands for subtraction: %s and %s'
-                            % (type(self), type(x)))
+        raise ValueError(f'Wrong operands for subtraction: {type(self)} and {type(x)}')
 
     @property
     def dayname(self):
@@ -389,13 +388,13 @@ class Day(datetime.date):        # pylint:disable=too-many-public-methods
             'W': lambda: str(self.weeknum),
             'w': lambda: str(self.weekday),
             'n': lambda: str(self.month),
-            'm': lambda: '%02d' % self.month,
+            'm': lambda: f'{int(self.month):02}',
             'b': lambda: self.Month.format('b'),
             'M': lambda: self.Month.format('M'),
             'N': lambda: self.Month.format('N'),
             'F': lambda: self.Month.format('F'),
             'j': lambda: str(self.day),
-            'd': lambda: '%02d' % self.day,
+            'd': lambda: f'{int(self.day):02}',
             'D': lambda: self.dayname[:3],
             'l': lambda: self.dayname,
             'z': lambda: str(int(self) - int(Day(self.year, 1, 1))),

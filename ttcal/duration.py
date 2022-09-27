@@ -23,7 +23,7 @@ class Period:
     def __repr__(self):
         if self.months >= 12:
             return "Period(%d years, %d months)" % divmod(self.months, 12)
-        return "Period(%d months)" % self.months
+        return f"Period({self.months} months)"
 
     def __add__(self, other):
         return Period(months=self.months + other.months)

@@ -107,7 +107,7 @@ class Year:    # pylint:disable=too-many-public-methods
         return str(self.year)
 
     def __repr__(self):
-        return 'Year(%d)' % self.year
+        return f'Year({self.year})'
 
     def __str__(self):      # pragma: nocover
         return str(self.year)
@@ -136,7 +136,7 @@ class Year:    # pylint:disable=too-many-public-methods
         """Year tags have the lower-case letter y + the four digit year,
            eg. y2008.
         """
-        return 'y%d' % self.year
+        return f'y{self.year}'
 
     def marked_days(self):
         """Yield all 'marked' days in year.

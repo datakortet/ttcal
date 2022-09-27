@@ -53,8 +53,8 @@ class Month:   # pylint:disable=too-many-public-methods
             """, re.VERBOSE)
         m = mnth_matcher.match(txt)
         if not m:
-            msg = "Ugyldig format, må være åååå-mm, ikke %r." % txt
-            raise ValueError(msg.encode('u8'))
+            msg = f"Ugyldig format, må være åååå-mm, ikke {txt!r}."
+            raise ValueError(msg)
         mnth_groups = m.groupdict()
 
         return cls(int(mnth_groups["year"]), int(mnth_groups["month"]))
@@ -101,10 +101,10 @@ class Month:   # pylint:disable=too-many-public-methods
         return Month, (self.year, self.month)
 
     def __unicode__(self):      # pragma: nocover
-        return "%04d-%02d" % (self.year, self.month)
+        return f"{int(self.year):04}-{int(self.month):02}"
 
     def __str__(self):      # pragma: nocover
-        return '%04d-%02d' % (self.year, self.month)
+        return f'{int(self.year):04}-{int(self.month):02}'
 
     def __repr__(self):
         return f'Month({self.year}, {self.month})'
@@ -235,7 +235,7 @@ class Month:   # pylint:disable=too-many-public-methods
         """Return a text representation that is parsable by the from_idtag
            function (above), and is useable as part of an url.
         """
-        return 'm%d%d' % (self.year, self.month)
+        return f'm{int(self.year)}{int(self.month)}'
 
     @property
     def daycount(self):
@@ -318,7 +318,7 @@ class Month:   # pylint:disable=too-many-public-methods
             elif ch == 'n':
                 yield str(self.month)
             elif ch == 'm':
-                yield '%02d' % self.month
+                yield f'{self.month:02}'
             elif ch == 'b':
                 yield self.name[:3].lower()
             elif ch == 'M':
