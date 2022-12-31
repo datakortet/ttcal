@@ -60,7 +60,7 @@ class Duration(datetime.timedelta):
         return res
 
     @classmethod
-    def parse(cls, txt):
+    def parse(cls, txt, raise_on_error=False):
         """Parse a textual representation into a Duration object.
            Format HHH:MM:SS.
         """
@@ -87,6 +87,10 @@ class Duration(datetime.timedelta):
             )?
             """, re.VERBOSE)
         time_matches = time_matcher.match(txt)
+        if raise_on_error and not time_matches:
+            raise ValueError(f"Couldn't parse {txt} as a duration.")
+        if raise_on_error and time_matches.span()[1] != len(txt):
+            raise ValueError(f"Remaining text: {txt[time_matches.span()[1]:]} could not be parsed as a duration.")
         time_groups = time_matches.groupdict()
         keys = list(time_groups.keys())
 
