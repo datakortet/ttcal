@@ -1,7 +1,7 @@
 """
 Date classes (originally from TikTok).
 """
-__version__ = '2.0.2'
+__version__ = '2.0.3'
 from .day import Day, Days, Today
 from .duration import Duration, Period
 from .calfns import chop, isoweek

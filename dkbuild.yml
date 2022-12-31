@@ -3,7 +3,7 @@ _schema: https://static.datakortet.no/schema/dkbuild.schema.yaml
 package:
   name: ttcal
   description: UNKNOWN
-  version: 2.0.2
+  version: 2.0.3
   created: 2013
 
 build:
