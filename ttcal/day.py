@@ -6,13 +6,13 @@ import datetime
 import re
 from .calfns import rangecmp, rangetuple
 from .duration import Duration, Period
+from typing import List, Tuple
 
 
 class fstr(str):
     """String sub-class with a split() method that splits a given indexes.
 
        Usage::
-          >>> from __future__ import print_function
           >>> r = fstr('D2008022002')
           >>> print(r.split(1, 5, 7, 9))
           ['D', '2008', '02', '20', '02']
@@ -21,12 +21,22 @@ class fstr(str):
           '2008'
 
     """
-    def split(self, *ndxs):
-        if len(ndxs) == 0:
+    def _validate_indexes(self, *ndxs: Tuple[int]) -> Tuple[int]:
+        """Return indexes that are valid for this string, in order.
+        """
+        ndxs = sorted(set(ndxs))
+        if not ndxs:
+            return []
+        if ndxs and ndxs[0] == 0:
+            ndxs = ndxs[1:]
+        while ndxs and ndxs[-1] > len(self):
+            ndxs = ndxs[:-1]
+        return ndxs
+
+    def split(self, *ndxs: Tuple[int]) -> List[str]:
+        ndxs = self._validate_indexes(*ndxs)
+        if not ndxs:
             return [self]
-        if len(ndxs) == 1:
-            i = ndxs[0]
-            return [self[:i], self[i:]]
 
         res = []
         b = 0
@@ -36,6 +46,30 @@ class fstr(str):
         res.append(self[b:])
 
         return res
+
+    @classmethod
+    def join(cls, strings: List[str], *ndxs: Tuple[int]) -> str:
+        ndxs = [n for n in ndxs if n > 0]
+        if not ndxs:
+            return strings[0] if strings else ''
+        res = ''
+        for s, n in zip(strings, ndxs):
+            res += s[:n]
+        res += strings[-1]
+        return res
+
+
+
+def fsplit(strval: str, *ndxs: Tuple[int]) -> List[str]:
+    """Split a string at given indexes.
+    """
+    return fstr(strval).split(*ndxs)
+
+
+def fjoin(strings: List[str], *ndxs: Tuple[int]) -> str:
+    """Join a sequence of strings.
+    """
+    return fstr.join(strings, *ndxs)
 
 
 class Day(datetime.date):  # pylint:disable=too-many-public-methods
