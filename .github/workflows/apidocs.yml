@@ -22,7 +22,7 @@ jobs:
       run: |
         rm -rf ttcal/docs/api
         mkdir -p build/docs
-        mikdir -p public
+        mkdir -p public
 
     - name: Generate API documentation with sphinx
       run: |
