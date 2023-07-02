@@ -2,8 +2,8 @@ _schema: https://static.datakortet.no/schema/dkbuild.schema.yaml
 
 package:
   name: ttcal
-  description: UNKNOWN
-  version: 2.0.3
+  description: Simple calendar operations
+  version: 2.0.4
   created: 2013
 
 build:
