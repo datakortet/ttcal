@@ -3,7 +3,6 @@
 
 """
 ttcal - calendar operations
-===========================
 """
 
 classifiers = """\
@@ -14,7 +13,7 @@ Programming Language :: Python :: 3
 Topic :: Software Development :: Libraries
 """
 
-import sys, os
+import os
 import setuptools
 
 version = '2.0.4'
@@ -31,7 +30,7 @@ setuptools.setup(
     author_email='bp@datakortet.no',
     requires=[],
     install_requires=[],
-    # description=__doc__.strip(),
+    description=__doc__.strip(),
     long_description=description,
     classifiers=[line for line in classifiers.split('\n') if line],
     packages=setuptools.find_packages(exclude=['tests']),
