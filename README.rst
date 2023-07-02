@@ -3,6 +3,22 @@
 ttcal - calendar operations
 ===========================
 
+.. image:: https://github.com/datakortet/ttcal/actions/workflows/ci-cd.yml/badge.svg
+   :target: https://github.com/datakortet/ttcal/actions/workflows/ci-cd.yml
+
+.. image:: https://github.com/datakortet/ttcal/actions/workflows/apidocs.yml/badge.svg
+   :target: https://datakortet.github.io/ttcal/
+
+.. image:: https://github.com/datakortet/ttcal/actions/workflows/codeql-analysis.yml/badge.svg
+   :target: https://github.com/datakortet/ttcal/actions/workflows/codeql-analysis.yml
+
+.. image:: https://codecov.io/gh/datakortet/ttcal/branch/master/graph/badge.svg?token=rG43wgZ3aK
+   :target: https://codecov.io/gh/datakortet/ttcal
+
+.. image:: https://pepy.tech/badge/ttcal
+   :target: https://pepy.tech/project/ttcal
+   :alt: Downloads
+   
 This is a small library for calendar operations.
 
 Usage::
