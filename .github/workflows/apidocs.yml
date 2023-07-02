@@ -1,0 +1,42 @@
+name: apidocs
+on:
+- push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install requirements for documentation generation
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        python -m pip install docutils sphinx
+
+    - name: Cleanup and setup
+      run: |
+        rm -rf ttcal/docs/api
+        mkdir -p build/docs
+        mikdir -p public
+
+    - name: Generate API documentation with sphinx
+      run: |
+
+        # sphinx-apidoc -o docs/api ttcal ttcal/migrations ttcal/vendor
+        sphinx-apidoc -o docs/api ttcal 
+        cp docs/api/* docs
+        rm -rf docs/api
+        sphinx-build -b html docs build/docs
+        cp -rf build/docs/* public/
+
+    - name: Push API documentation to Github Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+        commit_message: "Generate API documentation"

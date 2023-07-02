@@ -168,7 +168,7 @@ class Duration(datetime.timedelta):
         """The number of hours in self (not including days).
         """
         sgn, hr, _mn, _sc = self.duration_tuple()
-        return int(sgn == "") * (hr%24)
+        return int(sgn == "") * (hr % 24)
 
     @property
     def mins(self):

@@ -3,22 +3,34 @@
 ttcal - calendar operations
 ===========================
 
-.. image:: https://travis-ci.org/datakortet/ttcal.svg?branch=master
-    :target: https://travis-ci.org/datakortet/ttcal
+This is a small library for calendar operations.
 
-.. image:: https://coveralls.io/repos/github/datakortet/ttcal/badge.svg?branch=master
-    :target: https://coveralls.io/github/datakortet/ttcal
+Usage::
 
-.. image:: https://gitlab.com/norsktest/ttcal/badges/master/pipeline.svg
-   :target: https://gitlab.com/norsktest/ttcal/commits/master
-   :alt: pipeline status
-
-.. image:: https://img.shields.io/badge/docs-darkgreen.svg
-   :target: https://norsktest.gitlab.io/ttcal
-   :alt: documentation
-
-.. image:: https://codecov.io/gl/norsktest/ttcal/branch/master/graph/badge.svg?token=AU6BBD04LY
-  :target: https://codecov.io/gl/norsktest/ttcal
-
+    >>> from ttcal import *
+    >>> Today()
+    2023-7-2-7
+    >>> Today() + 1
+    2023-7-3-7
+    >>> import datetime
+    >>> isinstance(Today(), datetime.date)
+    True
+    >>> Day(1991, 2, 20)
+    1991-2-20-2
+    >>> Month()
+    Month(2023, 7)
+    >>> Month() + 2
+    Month(2023, 9)
+    >>> Year()
+    Year(2023)
+    >>> Year() + 2
+    Year(2025)
+    >>> Day(2024, 2, 29)
+    2024-2-29-2
+    >>> Day(2024, 2, 29) + Period(months=2)
+    2024-4-29-4
+    >>> Day(2024, 4, 30) - Period(months=2)
+    2024-2-29-2
+    >>>
 
 

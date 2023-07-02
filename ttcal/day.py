@@ -59,7 +59,6 @@ class fstr(str):
         return res
 
 
-
 def fsplit(strval: str, *ndxs: Tuple[int]) -> List[str]:
     """Split a string at given indexes.
     """
