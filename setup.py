@@ -16,7 +16,7 @@ Topic :: Software Development :: Libraries
 import os
 import setuptools
 
-version = '2.0.4'
+version = '2.0.5'
 
 DIRNAME = os.path.dirname(__file__)
 description = open(os.path.join(DIRNAME, 'README.rst'), 'r').read()
