@@ -2,6 +2,7 @@
 Test that all modules are importable.
 """
 
+import ttcal
 import ttcal.calfns
 import ttcal.day
 import ttcal.duration
@@ -12,9 +13,11 @@ import ttcal.week
 import ttcal.year
 
 
-def test_import_():
-    "Test that all modules are importable."
+def test_import_ttcal():
+    """Test that all modules are importable.
+    """
     
+    assert ttcal
     assert ttcal.calfns
     assert ttcal.day
     assert ttcal.duration
