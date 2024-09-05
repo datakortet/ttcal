@@ -44,6 +44,14 @@ ttcal.month module
    :undoc-members:
    :show-inheritance:
 
+ttcal.quarter module
+--------------------
+
+.. automodule:: ttcal.quarter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ttcal.week module
 -----------------
 
