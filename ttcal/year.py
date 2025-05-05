@@ -270,6 +270,17 @@ class Year:  # pylint:disable=too-many-public-methods
         for m in self.months:
             yield from m.days()
 
+    def days(self):
+        """Yield all days in all months in year.
+        """
+        return list(self.dayiter())
+
+    @property
+    def daycount(self):
+        """Return the number of days in year.
+        """
+        return len(self.days())
+
     def rows(self):
         """Return a year calendar layout (3x4).
         """
