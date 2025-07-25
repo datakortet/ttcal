@@ -36,6 +36,14 @@ ttcal.duration module
    :undoc-members:
    :show-inheritance:
 
+ttcal.halfyear module
+---------------------
+
+.. automodule:: ttcal.halfyear
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ttcal.month module
 ------------------
 
