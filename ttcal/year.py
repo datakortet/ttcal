@@ -185,6 +185,11 @@ class Year:  # pylint:disable=too-many-public-methods
         """Both halves of the year.
         """
         return [self.H1, self.H2]
+    
+    def halfyears(self):
+        """Return the halfyear (for api completeness).
+        """
+        return self.halves()
 
     @property
     def Q1(self):
