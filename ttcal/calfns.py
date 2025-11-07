@@ -1,11 +1,13 @@
 """
 Misc. calendar functions.
 """
+from __future__ import annotations
+from typing import Iterator, List, Tuple, Union, Any
 import datetime
 from itertools import islice
 
 
-def chop(it, n):
+def chop(it: Iterator, n: int) -> Iterator[List]:
     """Chop iterator into `n` size chuchks.
     """
     while 1:
@@ -15,7 +17,7 @@ def chop(it, n):
         yield s
 
 
-def isoweek(year, week):
+def isoweek(year: int, week: int) -> Iterator[datetime.date]:
     """Iterate over the days in isoweek `week` of `year`.
     """
     # 4th of January is always in week 1
@@ -36,7 +38,7 @@ def isoweek(year, week):
         yield datetime.date.fromordinal(n)
 
 
-def rangetuple(x):
+def rangetuple(x: Any) -> Union[Tuple[datetime.datetime, datetime.datetime], Any]:
     """Return a 2-tuple of datetimes representing a time range.
     """
     if hasattr(x, 'rangetuple'):
@@ -49,7 +51,8 @@ def rangetuple(x):
     return x
 
 
-def rangecmp(interval_a, interval_b):
+def rangecmp(interval_a: Tuple[datetime.datetime, datetime.datetime],
+             interval_b: Tuple[datetime.datetime, datetime.datetime]) -> int:
     """Compare half-open intervals [a, b) and [c, d)
        They compare equal if there is overlap.
     """

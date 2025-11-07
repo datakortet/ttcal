@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(workon:*)",
+      "Bash(pytest:*)",
+      "Bash(/srv/venv/tt3311/Scripts/pytest.exe tests/test_ttcal_month.py -v)",
+      "Bash(python -m pytest:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

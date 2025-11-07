@@ -1,9 +1,15 @@
 """
 Month operations.
 """
+from __future__ import annotations
+from typing import Optional, List, Tuple, Union, Iterator, Any, ClassVar, TYPE_CHECKING
 import re
 import calendar
 import datetime
+
+if TYPE_CHECKING:
+    from .year import Year
+
 from .day import Day, Days
 from .week import Week
 from .calfns import chop, rangecmp, rangetuple
@@ -13,15 +19,19 @@ class Month:  # pylint:disable=too-many-public-methods
     """A calendar month.
     """
 
-    month_name = [
+    month_name: ClassVar[List[str]] = [
         '', 'Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli',
         'August', 'September', 'Oktober', 'November', 'Desember'
     ]
-    year = None
-    month = None
+    year: Optional[int] = None
+    month: Optional[int] = None
+    calendar: calendar.Calendar
+    name: str
+    short_name: str
+    weeks: List[Week]
 
     @classmethod
-    def from_idtag(cls, tag):
+    def from_idtag(cls, tag: str) -> Month:
         """Parse idtag into `class`:Month.
         """
         # m20082
@@ -30,19 +40,19 @@ class Month:  # pylint:disable=too-many-public-methods
         return cls(year=y, month=m)
 
     @classmethod
-    def from_date(cls, d):
+    def from_date(cls, d: Union[datetime.date, Day]) -> Month:
         """Create a Month from the date ``d``.
         """
         return cls(year=d.year, month=d.month)
 
-    def rangetuple(self):
+    def rangetuple(self) -> Tuple[datetime.datetime, datetime.datetime]:
         """Return a datetime tuple representing this month
            (as a half-open interval).
         """
         return self.first.datetime(), (self.last + 1).datetime()
 
     @classmethod
-    def parse(cls, txt):
+    def parse(cls, txt: Optional[str]) -> Optional[Month]:
         """Parse a textual representation into a Month object.
            Format YYYY-MM?
         """
@@ -61,7 +71,8 @@ class Month:  # pylint:disable=too-many-public-methods
 
         return cls(int(mnth_groups["year"]), int(mnth_groups["month"]))
 
-    def __init__(self, year=None, month=None, date=None):
+    def __init__(self, year: Optional[int] = None, month: Optional[int] = None,
+                 date: Optional[datetime.date] = None) -> None:
         super().__init__()
         if date is not None:
             self.year = date.year
@@ -85,7 +96,7 @@ class Month:  # pylint:disable=too-many-public-methods
         self.weeks = [Week(days, self.month) for days in self._weeks()]
         # self.day = 1
 
-    def __call__(self, daynum=None):
+    def __call__(self, daynum: Optional[int] = None) -> Union[Month, Day]:
         """Return the given Day for this year.
 
            Usage::
@@ -97,15 +108,15 @@ class Month:  # pylint:disable=too-many-public-methods
             return self  # for when django tries to do value = value() *sigh*
         return Day(self.year, self.month, daynum)
 
-    def __reduce__(self):
+    def __reduce__(self) -> Tuple[type, Tuple[int, int]]:
         """Deepcopy helper.
         """
         return Month, (self.year, self.month)
 
-    def __str__(self):  # pragma: nocover
+    def __str__(self) -> str:  # pragma: nocover
         return f'{int(self.year):04}-{int(self.month):02}'
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'Month({self.year}, {self.month})'
 
     # @property
@@ -115,12 +126,12 @@ class Month:  # pylint:disable=too-many-public-methods
     #     return Year(self.year)
 
     @property
-    def Month(self):
+    def Month(self) -> Month:
         """Return the month (for api completeness).
         """
         return self
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return self.year * 100 + self.month
 
     # def __eq__(self, other):
@@ -130,54 +141,54 @@ class Month:  # pylint:disable=too-many-public-methods
     # except:
     #     return False
 
-    def __len__(self):
+    def __len__(self) -> int:
         _, n = calendar.monthrange(self.year, self.month)
         return n
 
-    def datetuple(self):
+    def datetuple(self) -> Tuple[int, int, int]:
         """First date in month.
         """
         return self.year, self.month, 1
 
-    def __lt__(self, other):
+    def __lt__(self, other: Any) -> bool:
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) < 0
 
-    def __le__(self, other):
+    def __le__(self, other: Any) -> bool:
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) <= 0
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> bool:
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) == 0
 
-    def __ne__(self, other):
+    def __ne__(self, other: Any) -> bool:
         return not self == other
 
-    def __gt__(self, other):
+    def __gt__(self, other: Any) -> bool:
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) > 0
 
-    def __ge__(self, other):
+    def __ge__(self, other: Any) -> bool:
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) >= 0
 
-    def numdays(self):  # for use in template
+    def numdays(self) -> int:  # for use in template
         """The number of days in the month.
         """
         return len(self)
 
-    def __add__(self, n):
+    def __add__(self, n: int) -> Month:
         """Add n months to self.
         """
         me = self.year * 12 + (self.month - 1)
@@ -185,10 +196,10 @@ class Month:  # pylint:disable=too-many-public-methods
         q, r = divmod(me, 12)
         return Month(q, r + 1)
 
-    def __radd__(self, n):
+    def __radd__(self, n: int) -> Month:
         return self + n
 
-    def __sub__(self, n):
+    def __sub__(self, n: Union[int, Month]) -> Union[int, Month]:
         if isinstance(n, Month):
             first, last = min(self, n), max(self, n)
             ydiff = last.year - first.year
@@ -214,30 +225,30 @@ class Month:  # pylint:disable=too-many-public-methods
     # def __iter__(self):
     #     return iter(self.weeks)
 
-    def dayiter(self):
+    def dayiter(self) -> Iterator[Day]:
         """Iterator over days in each week of month.
         """
         for wk in iter(self.weeks):
             yield from wk
 
-    def days(self):
+    def days(self) -> List[Day]:
         """Return a list of days (`class`:ttcal.Day) in this month.
         """
-        res = []
+        res: List[Day] = []
         for wk in iter(self.weeks):
             for day in wk:
                 if day.month == self.month:
                     res.append(day)  # yield day
         return res
 
-    def idtag(self):
+    def idtag(self) -> str:
         """Return a text representation that is parsable by the from_idtag
            function (above), and is useable as part of an url.
         """
         return f'm{int(self.year)}{int(self.month)}'
 
     @property
-    def daycount(self):
+    def daycount(self) -> int:
         """The number of days in this month (as an int).
         """
         n = calendar.mdays[self.month]
@@ -245,43 +256,43 @@ class Month:  # pylint:disable=too-many-public-methods
             n += 1
         return n
 
-    def prev(self):
+    def prev(self) -> Month:
         """Previous month.
         """
         return self - 1
 
-    def next(self):
+    def next(self) -> Month:
         """Next month.
         """
         return self + 1
 
     @property
-    def first(self):
+    def first(self) -> Day:
         """First day in month.
         """
         return Day(self.year, self.month, 1)
 
     @property
-    def last(self):
+    def last(self) -> Day:
         """Last day in month.
         """
         return Day(self.year, self.month, self.daycount)
 
-    def _weeks(self):
+    def _weeks(self) -> Iterator[List[datetime.date]]:
         c = self.calendar
         return chop(c.itermonthdates(self.year, self.month), 7)
 
-    def __contains__(self, date):
+    def __contains__(self, date: Any) -> bool:
         return self.year == date.year and self.month == date.month
 
-    def __getitem__(self, day):
+    def __getitem__(self, day: Day) -> Day:
         for wk in self.weeks:
             for d in wk:
                 if d.compare(day) == 'day':
                     return d
         raise KeyError
 
-    def mark(self, d, value='mark', method='replace'):
+    def mark(self, d: Day, value: str = 'mark', method: str = 'replace') -> None:
         """Add a 'mark' to a day in this month.
         """
         try:
@@ -299,7 +310,7 @@ class Month:  # pylint:disable=too-many-public-methods
         except KeyError:  # pragma:nocover
             pass
 
-    def marked_days(self):
+    def marked_days(self) -> Iterator[Day]:
         """Yield all days with marks.
         """
         for wk in self.weeks:
@@ -307,7 +318,7 @@ class Month:  # pylint:disable=too-many-public-methods
                 if hasattr(d, 'mark'):
                     yield d
 
-    def _format(self, fmtchars):
+    def _format(self, fmtchars: List[str]) -> Iterator[str]:
         # http://blog.tkbe.org/archive/date-filter-cheat-sheet/
         for ch in fmtchars:
             if ch == 'y':
@@ -330,7 +341,7 @@ class Month:  # pylint:disable=too-many-public-methods
             else:
                 yield ch
 
-    def format(self, fmt=None):
+    def format(self, fmt: Optional[str] = None) -> str:
         """Format according to format string. Default format is
            monthname, four-digit-year.
         """
@@ -339,14 +350,14 @@ class Month:  # pylint:disable=too-many-public-methods
         tmp = list(self._format(list(fmt)))
         return ''.join(tmp)
 
-    def range(self):
+    def range(self) -> Days:
         """Return an iterator for the range of `self`.
         """
         # if hasattr(self, 'dayiter'):
         #     return self.dayiter()
         return Days(self.first, self.last)
 
-    def between_tuple(self):  # pylint:disable=E0213
+    def between_tuple(self) -> Tuple[datetime.datetime, datetime.datetime]:  # pylint:disable=E0213
         """Return a tuple of datetimes that is convenient for sql
            `between` queries.
         """
@@ -354,13 +365,13 @@ class Month:  # pylint:disable=too-many-public-methods
                 (self.last + 1).datetime() - datetime.timedelta(seconds=1))
 
     @property
-    def middle(self):
+    def middle(self) -> Day:
         """Return the day that splits the date range in half.
         """
         middle = (self.first.toordinal() + self.last.toordinal()) // 2
         return Day.fromordinal(middle)
 
-    def timetuple(self):
+    def timetuple(self) -> datetime.datetime:
         """Create timetuple from datetuple.
            (to interact with datetime objects).
         """
@@ -370,7 +381,7 @@ class Month:  # pylint:disable=too-many-public-methods
 
 
 # noinspection PyPep8Naming
-def _Month(self):
+def _Month(self: Day) -> Month:
     """Return a Month object representing the month `self` belongs to.
     """
     return Month(self.year, self.month)

@@ -12,84 +12,27 @@ This file contains detailed implementation plans for the current active task(s).
 4. Update SUMMARIES.md when complete
 5. Mark task done in TODO.md and remove from here
 
-## Active Task: Add Comprehensive Type Hints
+## No Active Task
 
-**Priority**: 🟡 High
+**Status**: ✅ Previous task completed successfully (Type Hints Implementation)
 
-**Estimated Time**: 4-6 hours
+## Available Tasks (from TODO.md)
 
-**Started**: 2025-11-07
+### Quick Win Options (< 1 hour):
+1. Remove debug print statement (`ttcal/templatetags/ttcal_tags.py:47`)
+2. Add encoding to file operations (`setup.py:22`)
+3. Remove `__div__()` method (`duration.py:274-290`)
+4. Clean up setup.cfg (`setup.cfg:2`)
 
-### Objective
-Add comprehensive type hints across all modules to improve IDE support, documentation, and catch potential type errors early. Currently only `day.py` has minimal type hints.
+### Medium Effort Options (few hours):
+1. Convert % formatting to f-strings (multiple files)
+2. Clean up commented code blocks (multiple files)
+3. Fix Quarter comparison operators (`quarter.py:39-80`)
 
-### Files to Modify
-- [ ] `ttcal/month.py` - All methods lack type hints (~30 methods)
-- [ ] `ttcal/year.py` - All methods lack type hints (~40 methods)
-- [ ] `ttcal/week.py` - All methods lack type hints (~20 methods)
-- [ ] `ttcal/quarter.py` - All methods lack type hints (~20 methods)
-- [ ] `ttcal/duration.py` - Complete partial coverage (~15 methods)
-- [ ] `ttcal/calfns.py` - Add hints to helper functions (~5 functions)
-- [ ] `ttcal/day.py` - Enhance existing minimal hints
-
-### Implementation Plan
-1. Start with `month.py` as it's a core class
-2. Add imports: `from typing import Optional, List, Tuple, Union, Iterator, Any, ClassVar`
-3. Add `from __future__ import annotations` for forward references
-4. Type all public methods, properties, and class methods
-5. Type private methods where it improves clarity
-6. Use `datetime.date` and `datetime.datetime` types where applicable
-7. Test after each file to ensure no regressions
-8. Document any complex type annotations
-
-### Type Hints Strategy
-```python
-# Import pattern for each file
-from __future__ import annotations
-from typing import Optional, List, Tuple, Union, Iterator, Any, ClassVar
-import datetime
-
-# Method signatures examples:
-def __init__(self, year: Optional[int] = None, month: Optional[int] = None) -> None:
-def from_idtag(cls, tag: str) -> Month:
-def parse(cls, txt: Optional[str]) -> Optional[Month]:
-@property
-def first(self) -> Day:
-def __add__(self, n: int) -> Month:
-def __eq__(self, other: object) -> bool:
-def format(self, fmt: Optional[str] = None) -> str:
-```
-
-### Testing Strategy
-```bash
-# After each file, run tests
-workon ttcal311 && pytest tests/test_ttcal_month.py -v
-workon ttcal311 && pytest tests/test_ttcal_year.py -v
-workon ttcal311 && pytest tests/test_ttcal_week.py -v
-workon ttcal311 && pytest tests/test_ttcal_quarter.py -v
-
-# Run full suite when done
-workon ttcal311 && pytest -vv tests/
-
-# Optional: Install and run mypy
-pip install mypy
-mypy ttcal/ --ignore-missing-imports
-```
-
-### Success Criteria
-- [x] All public methods have type hints
-- [x] All properties have return type annotations
-- [x] Class methods properly typed with cls parameter
-- [x] Complex types documented in comments where needed
-- [x] All tests passing without modification
-- [ ] Optional: mypy runs without errors
-
-### Notes
-- Maintain backward compatibility - type hints are annotations only
-- Some circular dependencies may require `from __future__ import annotations`
-- Use `Optional[T]` for nullable parameters
-- Use `Union[T1, T2]` for multiple acceptable types
-- For Django compatibility, may need `Any` in some places
+### Larger Projects (days):
+1. Implement i18n system (multiple files)
+2. Complete type hints in duration.py
+3. Extract comparison logic to mixin
 
 ---
 
