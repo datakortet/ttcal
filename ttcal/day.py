@@ -229,8 +229,7 @@ class Day(datetime.date):  # pylint:disable=too-many-public-methods
         return hash(f'{self.year:04}{self.month:02}{self.day:02}')
 
     def __repr__(self):
-        return '%d-%d-%d-%d' % (  # pylint:disable=C0209
-            self.year, self.month, self.day, self.membermonth)
+        return f'{self.year}-{self.month}-{self.day}-{self.membermonth}'
 
     def __str__(self):
         return f'{self.year:04}-{self.month:02}-{self.day:02}'
@@ -365,8 +364,7 @@ class Day(datetime.date):  # pylint:disable=too-many-public-methods
     def idtag(self):
         """Return the idtag for `self`: dyyyymmddmm.
         """
-        return 'd%d%02d%02d%02d' % (  # pylint:disable=C0209
-            self.year, self.month, self.day, self.membermonth)
+        return f'd{self.year}{self.month:02d}{self.day:02d}{self.membermonth:02d}'
 
     @property
     def today(self):  # pylint:disable=arguments-differ,invalid-overridden-method

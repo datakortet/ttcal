@@ -48,15 +48,15 @@ Pick a task from the TODO.md file, write a plan for the task in the TASKS.md fil
 
 ## 🟠 Medium Priority (Code Quality)
 
-### 3. Modernize String Formatting
-- [ ] **Issue**: Old-style `%` formatting used in several places
-- [ ] **Impact**: Inconsistent code style, less readable
-- [ ] **Files to Update**:
-  - `ttcal/day.py:232` - `'%d-%d-%d-%d' % (...)`
-  - `ttcal/day.py:368` - `'d%d%02d%02d%02d' % (...)`
-  - `ttcal/duration.py:147` - `'%sDuration(...)' % dt`
-  - `ttcal/duration.py:188` - `'%s%d:%02d:%02d' % (...)`
-- [ ] **Solution**: Convert all to f-strings for consistency
+### 3. ~~Modernize String Formatting~~ ✅ COMPLETED (2025-11-07)
+- [x] **Issue**: Old-style `%` formatting used in several places
+- [x] **Impact**: Inconsistent code style, less readable
+- [x] **Files Updated**:
+  - `ttcal/day.py:232` - Converted `__repr__` to f-string
+  - `ttcal/day.py:367` - Converted `idtag` property to f-string
+  - `ttcal/duration.py:147` - Converted `__repr__` to f-string
+  - `ttcal/duration.py:189` - Converted `__str__` to f-string
+- [x] **Solution**: Converted all to f-strings for consistency
 
 ### 4. ~~Remove Python 2 Compatibility Code~~ ✅ COMPLETED (2025-11-07)
 - [x] **Issue**: Unnecessary Python 2 division compatibility code
@@ -138,6 +138,12 @@ Pick a task from the TODO.md file, write a plan for the task in the TASKS.md fil
 ## ✅ Completed Tasks
 
 ### 2025-11-07
+
+#### Session Part 4: String Formatting Modernization
+- **Convert % Formatting to F-Strings** (Medium Priority)
+  - Converted 4 occurrences in `day.py` and `duration.py`
+  - Improved code readability and consistency
+  - All 159 tests passing
 
 #### Session Part 3: Quick Win Improvements
 - **Remove Debug Print Statement** (Critical Priority)

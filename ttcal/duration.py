@@ -143,8 +143,8 @@ class Duration(datetime.timedelta):
         return obj
 
     def __repr__(self):
-        dt = self.duration_tuple()
-        return '%sDuration(hours=%d, minutes=%d, seconds=%d)' % dt  # pylint:disable=C0209
+        sign, hours, minutes, seconds = self.duration_tuple()
+        return f'{sign}Duration(hours={hours}, minutes={minutes}, seconds={seconds})'
 
     def duration_tuple(self):
         """Return self as hours, minutes, seconds.
@@ -185,7 +185,8 @@ class Duration(datetime.timedelta):
         return int(sgn == "") * sc
 
     def __str__(self):  # pragma: nocover
-        return '%s%d:%02d:%02d' % self.duration_tuple()  # pylint:disable=C0209
+        sign, hours, minutes, seconds = self.duration_tuple()
+        return f'{sign}{hours}:{minutes:02d}:{seconds:02d}'
 
     def toint(self):
         """Convert self to integer.
