@@ -3,8 +3,7 @@ quarter class.
 """
 import datetime
 
-from . import Month
-from .calfns import chop, rangecmp, rangetuple
+from .calfns import rangecmp, rangetuple
 from .day import Day
 from .year import Year
 

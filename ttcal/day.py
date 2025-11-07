@@ -4,9 +4,9 @@ Date (single day) operations.
 import calendar
 import datetime
 import re
+from typing import List, Tuple
 from .calfns import rangecmp, rangetuple
 from .duration import Duration, Period
-from typing import List, Tuple
 
 
 class fstr(str):
