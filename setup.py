@@ -19,7 +19,7 @@ import setuptools
 version = '2.0.5'
 
 DIRNAME = os.path.dirname(__file__)
-description = open(os.path.join(DIRNAME, 'README.rst'), 'r').read()
+description = open(os.path.join(DIRNAME, 'README.rst'), 'r', encoding='utf-8').read()
 
 
 setuptools.setup(

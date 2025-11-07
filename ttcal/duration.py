@@ -271,17 +271,7 @@ class Duration(datetime.timedelta):
     def __sub__(self, other):
         return Duration(super().__sub__(other))
 
-    def __div__(self, other):  # pragma: nocover
-        # this one is called for Python 2.7
-        if isinstance(other, Duration):
-            try:
-                return float(self.toint()) / float(other.toint())
-            except ZeroDivisionError:
-                return 0.0
-        return Duration(super().__div__(other))
-
     def __truediv__(self, other):  # pragma: nocover
-        # this one is used for Python 3+
         if isinstance(other, Duration):
             try:
                 return int(float(self.toint()) / float(other.toint()))
@@ -297,9 +287,6 @@ class Duration(datetime.timedelta):
     #
     # def __rfloordiv__(self, other):
     #     return other.__floordiv__(self)
-    #
-    # def __rdiv__(self, other):
-    #     return other.__div__(self)
     #
     # def __radd__(self, other):
     #     return other.__add__(self)

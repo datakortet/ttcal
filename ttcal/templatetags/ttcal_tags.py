@@ -44,5 +44,4 @@ def previous(ttval, n='1'):
 def is_current(ttval):
     """Return True if the `ttval` is now.
     """
-    print('is_current:', ttval, ttval == ttval.__class__())
     return ttval == ttval.__class__()
