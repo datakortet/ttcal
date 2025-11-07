@@ -81,14 +81,25 @@ class Day(datetime.date):  # pylint:disable=too-many-public-methods
     day_code = "M U W H F A S".split()
 
     def __reduce__(self):
+        """Support for pickling Day objects.
+
+           Returns a tuple for reconstructing the Day instance.
+        """
         return Day, (self.year, self.month, self.day)
 
     def __int__(self):
+        """Convert Day to integer (ordinal) representation.
+        """
         return self.toordinal()
 
     @classmethod
     def from_idtag(cls, tag):
         """Return Day from idtag.
+
+           An idtag is a string representation used for serialization.
+           Format: 'd' followed by YYYYMMDDBB where BB is membermonth.
+
+           Example: 'd2008022002' represents Feb 20, 2008 in member month 2.
         """
         if len(tag) == 9:
             # d2008022002
@@ -177,6 +188,12 @@ class Day(datetime.date):  # pylint:disable=too-many-public-methods
         return cls(year, month, day)
 
     def __new__(cls, *args, **kw):
+        """Create a new Day instance.
+
+           Args can be (year, month, day), a single date/Day object, or empty
+           for today. Supports optional membermonth keyword argument for
+           specifying which month this day belongs to (for week calculations).
+        """
         if len(args) == 3:
             y, m, d = args
         elif len(args) == 1:
@@ -195,6 +212,12 @@ class Day(datetime.date):  # pylint:disable=too-many-public-methods
     @staticmethod
     def get_day_name(daynum, length=None):
         """Return dayname for daynum.
+
+           Args:
+               daynum: Day number (0=Monday through 6=Sunday)
+               length: Optional max length to truncate the name
+
+           Returns: Norwegian day name as a string.
         """
         if length is None:
             return Day.day_name[daynum]
@@ -226,31 +249,56 @@ class Day(datetime.date):  # pylint:disable=too-many-public-methods
         return Day.fromordinal(middle)
 
     def __hash__(self):
+        """Return hash value for Day objects.
+        """
         return hash(f'{self.year:04}{self.month:02}{self.day:02}')
 
     def __repr__(self):
+        """Return the string representation of the Day object.
+        """
         return f'{self.year}-{self.month}-{self.day}-{self.membermonth}'
 
     def __str__(self):
+        """Return a formatted string representation in ISO format.
+        """
         return f'{self.year:04}-{self.month:02}-{self.day:02}'
 
     def datetime(self, hour=0, minute=0, second=0):
         """Extend `self` to datetime.
+
+           Args:
+               hour: Hour value (0-23), defaults to 0
+               minute: Minute value (0-59), defaults to 0
+               second: Second value (0-59), defaults to 0
+
+           Returns: A datetime.datetime object for this day at the specified time.
         """
         return datetime.datetime(self.year, self.month, self.day,
                                  hour, minute, second)
 
     def date(self):
-        """Excplicitly convert to datetime.date.
+        """Explicitly convert to datetime.date.
+
+           Returns a standard Python datetime.date object equivalent to this Day.
         """
         return datetime.date(self.year, self.month, self.day)
 
     def datetuple(self):
         """Return year, month, day.
+
+           Useful for unpacking or passing to functions that expect
+           separate year, month, and day arguments.
         """
         return self.year, self.month, self.day
 
     def __add__(self, n):
+        """Add days or a Period to this Day.
+
+           Args:
+               n: Integer number of days to add, or a Period object
+
+           Returns: A new Day object offset by the specified amount.
+        """
         if isinstance(n, Period):
             return n.add_to_day(Day, self)
         return Day.fromordinal(self.toordinal() + n)
@@ -281,6 +329,15 @@ class Day(datetime.date):  # pylint:disable=too-many-public-methods
 
     def __sub__(self, x):
         """Return number of days between Days or Day n days ago.
+
+           Args:
+               x: Can be a Day (returns int difference), Period, Duration,
+                  or int (returns new Day)
+
+           Returns: Integer days between two Days, or a new Day object offset
+                   by the specified amount.
+
+           Raises: ValueError if x is not a supported type.
         """
         if isinstance(x, Day):
             return self.toordinal() - x.toordinal()
@@ -412,6 +469,11 @@ class Day(datetime.date):  # pylint:disable=too-many-public-methods
         return None
 
     def _format(self, fmtchars):
+        """Map single char format codes to values.
+
+           Internal method that maps format characters to their corresponding
+           values for custom date formatting.
+        """
         # http://blog.tkbe.org/archive/date-filter-cheat-sheet/
         simplefmt = {
             'y': lambda: str(self.year)[-2:],
@@ -436,6 +498,12 @@ class Day(datetime.date):  # pylint:disable=too-many-public-methods
 
     def format(self, fmt=None):
         """Emulate Django's date filter.
+
+           Args:
+               fmt: Format string using Django date filter codes.
+                   If None, uses 'j. F Y' as default.
+
+           Returns: Formatted date string according to the format specification.
         """
         if fmt is None:
             # pylint:disable=C0301
@@ -453,30 +521,40 @@ class Day(datetime.date):  # pylint:disable=too-many-public-methods
         return datetime.datetime.combine(d, t)
 
     def __lt__(self, other):
+        """Less than comparison using range semantics.
+        """
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) < 0
 
     def __le__(self, other):
+        """Less than or equal comparison using range semantics.
+        """
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) <= 0
 
     def __eq__(self, other):
+        """Equal comparison using range semantics (overlapping ranges).
+        """
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) == 0
 
     def __gt__(self, other):
+        """Greater than comparison using range semantics.
+        """
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) > 0
 
     def __ge__(self, other):
+        """Greater than or equal comparison using range semantics.
+        """
         othr = rangetuple(other)
         if othr is other:
             return False
@@ -485,8 +563,15 @@ class Day(datetime.date):  # pylint:disable=too-many-public-methods
 
 class Today(Day):
     """Special subclass for today's date.
+
+       Always represents the current date regardless of construction arguments.
+       Has a special 'today' attribute set to True for template checking.
     """
     def __new__(cls, *args, **kw):
+        """Create a Today instance for the current date.
+
+           Ignores all arguments and always returns today's date.
+        """
         t = datetime.date.today()
         y, m, d = t.year, t.month, t.day
         obj = super().__new__(cls, y, m, d)
@@ -497,9 +582,19 @@ class Today(Day):
 
 
 class Days(list):
-    """A contigous set of days.
+    """A contiguous set of days.
+
+       Represents a range of consecutive days as a list, with convenience
+       methods for accessing first/last days and range operations.
     """
     def __init__(self, start, end, start_week=False):
+        """Initialize a Days object with a range of days.
+
+           Args:
+               start: The first Day in the range
+               end: The last Day in the range
+               start_week: If True, adjust start to beginning of week (Monday)
+        """
         super().__init__()
         assert start <= end
         if start_week:
@@ -510,13 +605,13 @@ class Days(list):
 
     @property
     def first(self):
-        """1st day
+        """Return the first day in the range.
         """
         return self[0]
 
     @property
     def last(self):
-        """last day
+        """Return the last day in the range.
         """
         return self[-1]
 

@@ -18,6 +18,12 @@ class Quarter:  # pylint:disable=too-many-public-methods
     months: List[Any]  # List[Month]
 
     def __init__(self, year: Optional[int] = None, quarter: Optional[int] = None) -> None:
+        """Initialize a Quarter object.
+
+           Args:
+               year: The year number. If None, uses the current year.
+               quarter: The quarter number (1-4). If None, uses quarter 1.
+        """
         super().__init__()
         # if quarter is None:
         if year is None:
@@ -29,6 +35,8 @@ class Quarter:  # pylint:disable=too-many-public-methods
         self.months = Year(year).quarters()[self.quarter-1]
 
     def __int__(self) -> int:
+        """Convert Quarter to integer representation.
+        """
         return self.quarter
 
     def range(self) -> Iterator[Day]:
@@ -59,6 +67,8 @@ class Quarter:  # pylint:disable=too-many-public-methods
     #     return rangecmp(self.rangetuple(), othr) <= 0
 
     def __eq__(self, other: Any) -> bool:
+        """Compare if this quarter is equal to another quarter or time range.
+        """
         if isinstance(other, int):
             return self.quarter == other
         othr = rangetuple(other)
@@ -67,6 +77,8 @@ class Quarter:  # pylint:disable=too-many-public-methods
         return rangecmp(self.rangetuple(), othr) == 0
 
     def __ne__(self, other: Any) -> bool:
+        """Compare if this quarter is not equal to another quarter or time range.
+        """
         return not self == other
 
     # def __gt__(self, other):
@@ -86,7 +98,7 @@ class Quarter:  # pylint:disable=too-many-public-methods
     #     return rangecmp(self.rangetuple(), othr) >= 0
 
     def timetuple(self) -> datetime.datetime:
-        """Returns a datetime at 00:00:00 on January 1st.
+        """Return a datetime at 00:00:00 on the first day of the quarter.
         """
         d = datetime.date(*self.first.datetuple())
         t = datetime.time()
@@ -94,12 +106,16 @@ class Quarter:  # pylint:disable=too-many-public-methods
 
     @property
     def first(self) -> Day:
+        """Return the first day of the quarter.
+        """
         # The negative indexing here is due to the fact that the
         # first quarter is list element 0 and so on.
         return self.Year.quarters()[self.quarter-1][0].first
 
     @property
     def last(self) -> Day:
+        """Return the last day of the quarter.
+        """
         return self.Year.quarters()[self.quarter-1][2].last
 
     def between_tuple(self) -> Tuple[datetime.datetime, datetime.datetime]:  # pylint:disable=E0213
@@ -137,9 +153,13 @@ class Quarter:  # pylint:disable=too-many-public-methods
     #     return datetime.datetime.combine(d, t)
 
     def __repr__(self) -> str:
+        """Return string representation for debugging.
+        """
         return f'Q({self.year}{self.quarter})'
 
     def __str__(self) -> str:  # pragma: nocover
+        """Return string representation of the quarter.
+        """
         return str(self.quarter)
 
     @property
@@ -150,16 +170,19 @@ class Quarter:  # pylint:disable=too-many-public-methods
 
     @classmethod
     def from_idtag(cls, tag: str) -> Quarter:
-        """quarter tags have the lower-case letter y + the four digit quarter,
-           eg. q20081.
+        """Parse quarter tag and return a Quarter object.
+
+           Format: 'q' followed by 4-digit year and quarter number.
+           Example: q20081 represents Q1 of 2008.
         """
         y = int(tag[1:5])
         q = int(tag[5])
         return cls(year=y, quarter=q)
 
     def idtag(self) -> str:
-        """quarter tags have the lower-case letter y + the four digit quarter,
-           eg. y2008.
+        """Return a tag representing this quarter.
+
+           Format: 'q' + year + quarter number (e.g., 'q20081').
         """
         return f'q{self.year}{self.quarter}'
 
@@ -169,9 +192,13 @@ class Quarter:  # pylint:disable=too-many-public-methods
         return Quarter(self.year, self.quarter + n)
 
     def __radd__(self, n: int) -> Quarter:
+        """Add n quarters to self (reverse operation).
+        """
         return self + n
 
     def __sub__(self, n: int) -> Quarter:
+        """Subtract n quarters from self.
+        """
         return self + (-n)
 
     # rsub doesn't make sense
@@ -187,6 +214,8 @@ class Quarter:  # pylint:disable=too-many-public-methods
         return self + 1
 
     def __hash__(self) -> int:
+        """Return hash value for this quarter.
+        """
         return self.quarter
 
     def dayiter(self) -> Iterator[Day]:
@@ -196,6 +225,8 @@ class Quarter:  # pylint:disable=too-many-public-methods
             yield from m.days()
 
     def _format(self, fmtchars: List[str]) -> Iterator[str]:
+        """Internal formatting helper method.
+        """
         # http://blog.tkbe.org/archive/date-filter-cheat-sheet/
         for ch in fmtchars:
             if ch == 'q':
@@ -207,7 +238,7 @@ class Quarter:  # pylint:disable=too-many-public-methods
 
     def format(self, fmt: Optional[str] = None) -> str:
         """Format according to format string. Default format is
-           four-digit-year and quearter-number.
+           four-digit-year and quarter-number.
         """
         if fmt is None:
             fmt = "Q"

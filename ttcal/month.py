@@ -33,6 +33,11 @@ class Month:  # pylint:disable=too-many-public-methods
     @classmethod
     def from_idtag(cls, tag: str) -> Month:
         """Parse idtag into `class`:Month.
+
+           An idtag is a string representation used for serialization.
+           Format: 'm' followed by YYYYMM (year and month).
+
+           Example: 'm200802' represents February 2008.
         """
         # m20082
         y = int(tag[1:5])
@@ -73,6 +78,16 @@ class Month:  # pylint:disable=too-many-public-methods
 
     def __init__(self, year: Optional[int] = None, month: Optional[int] = None,
                  date: Optional[datetime.date] = None) -> None:
+        """Initialize a Month object.
+
+           Args:
+               year: The year (e.g., 2024)
+               month: The month number (1-12)
+               date: Optional date object to extract year/month from
+
+           If no arguments provided, defaults to current month.
+           Raises ValueError if month is not in range 1-12.
+        """
         super().__init__()
         if date is not None:
             self.year = date.year
@@ -97,12 +112,17 @@ class Month:  # pylint:disable=too-many-public-methods
         # self.day = 1
 
     def __call__(self, daynum: Optional[int] = None) -> Union[Month, Day]:
-        """Return the given Day for this year.
+        """Return the given Day for this month.
+
+           Args:
+               daynum: Day number in the month (1-31). If None, returns self.
+
+           Returns: A Day object for the specified day, or self if no day provided.
 
            Usage::
 
-               return ttcal.Year().december(23)
-
+               month = ttcal.Month(2024, 12)
+               christmas = month(25)  # Returns Day for Dec 25, 2024
         """
         if daynum is None:  # pragma: nocover
             return self  # for when django tries to do value = value() *sigh*
@@ -110,13 +130,20 @@ class Month:  # pylint:disable=too-many-public-methods
 
     def __reduce__(self) -> Tuple[type, Tuple[int, int]]:
         """Deepcopy helper.
+
+           Returns a tuple for reconstructing the Month instance during
+           pickling/deepcopy operations.
         """
         return Month, (self.year, self.month)
 
     def __str__(self) -> str:  # pragma: nocover
+        """Return string representation in YYYY-MM format.
+        """
         return f'{int(self.year):04}-{int(self.month):02}'
 
     def __repr__(self) -> str:
+        """Return string representation for debugging.
+        """
         return f'Month({self.year}, {self.month})'
 
     # @property
@@ -132,6 +159,8 @@ class Month:  # pylint:disable=too-many-public-methods
         return self
 
     def __hash__(self) -> int:
+        """Return hash value for Month objects.
+        """
         return self.year * 100 + self.month
 
     # def __eq__(self, other):
@@ -142,6 +171,8 @@ class Month:  # pylint:disable=too-many-public-methods
     #     return False
 
     def __len__(self) -> int:
+        """Return the number of days in this month.
+        """
         _, n = calendar.monthrange(self.year, self.month)
         return n
 
@@ -151,33 +182,45 @@ class Month:  # pylint:disable=too-many-public-methods
         return self.year, self.month, 1
 
     def __lt__(self, other: Any) -> bool:
+        """Less than comparison using range semantics.
+        """
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) < 0
 
     def __le__(self, other: Any) -> bool:
+        """Less than or equal comparison using range semantics.
+        """
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) <= 0
 
     def __eq__(self, other: Any) -> bool:
+        """Equal comparison using range semantics (overlapping ranges).
+        """
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) == 0
 
     def __ne__(self, other: Any) -> bool:
+        """Not equal comparison.
+        """
         return not self == other
 
     def __gt__(self, other: Any) -> bool:
+        """Greater than comparison using range semantics.
+        """
         othr = rangetuple(other)
         if othr is other:
             return False
         return rangecmp(self.rangetuple(), othr) > 0
 
     def __ge__(self, other: Any) -> bool:
+        """Greater than or equal comparison using range semantics.
+        """
         othr = rangetuple(other)
         if othr is other:
             return False
@@ -197,9 +240,18 @@ class Month:  # pylint:disable=too-many-public-methods
         return Month(q, r + 1)
 
     def __radd__(self, n: int) -> Month:
+        """Add n months to self (right addition).
+        """
         return self + n
 
     def __sub__(self, n: Union[int, Month]) -> Union[int, Month]:
+        """Subtract months or get difference between months.
+
+           Args:
+               n: Either an int (months to subtract) or Month (to get difference)
+
+           Returns: A new Month if n is int, or int difference if n is Month.
+        """
         if isinstance(n, Month):
             first, last = min(self, n), max(self, n)
             ydiff = last.year - first.year
@@ -279,13 +331,21 @@ class Month:  # pylint:disable=too-many-public-methods
         return Day(self.year, self.month, self.daycount)
 
     def _weeks(self) -> Iterator[List[datetime.date]]:
+        """Generate week-long lists of dates for this month.
+
+           Used internally to construct the weeks attribute.
+        """
         c = self.calendar
         return chop(c.itermonthdates(self.year, self.month), 7)
 
     def __contains__(self, date: Any) -> bool:
+        """Check if a date is in this month.
+        """
         return self.year == date.year and self.month == date.month
 
     def __getitem__(self, day: Day) -> Day:
+        """Get a specific day from the month by index.
+        """
         for wk in self.weeks:
             for d in wk:
                 if d.compare(day) == 'day':
@@ -319,6 +379,11 @@ class Month:  # pylint:disable=too-many-public-methods
                     yield d
 
     def _format(self, fmtchars: List[str]) -> Iterator[str]:
+        """Map single char format codes to values.
+
+           Internal method that maps format characters to their corresponding
+           values for custom month formatting.
+        """
         # http://blog.tkbe.org/archive/date-filter-cheat-sheet/
         for ch in fmtchars:
             if ch == 'y':

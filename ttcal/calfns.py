@@ -8,7 +8,14 @@ from itertools import islice
 
 
 def chop(it: Iterator, n: int) -> Iterator[List]:
-    """Chop iterator into `n` size chuchks.
+    """Chop iterator into `n` size chunks.
+
+       Args:
+           it: Iterator to chop.
+           n: Chunk size.
+
+       Yields:
+           Lists of n elements from the iterator.
     """
     while 1:
         s = list(islice(it, n))
@@ -18,7 +25,14 @@ def chop(it: Iterator, n: int) -> Iterator[List]:
 
 
 def isoweek(year: int, week: int) -> Iterator[datetime.date]:
-    """Iterate over the days in isoweek `week` of `year`.
+    """Iterate over the days in ISO week `week` of `year`.
+
+       Args:
+           year: The year.
+           week: The ISO week number (1-53).
+
+       Yields:
+           datetime.date objects for each day in the week.
     """
     # 4th of January is always in week 1
     wk1date = datetime.date(year, 1, 4)
@@ -40,6 +54,13 @@ def isoweek(year: int, week: int) -> Iterator[datetime.date]:
 
 def rangetuple(x: Any) -> Union[Tuple[datetime.datetime, datetime.datetime], Any]:
     """Return a 2-tuple of datetimes representing a time range.
+
+       Args:
+           x: Object with rangetuple method, a datetime.date, or other value.
+
+       Returns:
+           A tuple of (start_datetime, end_datetime) if x has a time range,
+           otherwise returns x unchanged.
     """
     if hasattr(x, 'rangetuple'):
         return x.rangetuple()
@@ -53,8 +74,18 @@ def rangetuple(x: Any) -> Union[Tuple[datetime.datetime, datetime.datetime], Any
 
 def rangecmp(interval_a: Tuple[datetime.datetime, datetime.datetime],
              interval_b: Tuple[datetime.datetime, datetime.datetime]) -> int:
-    """Compare half-open intervals [a, b) and [c, d)
-       They compare equal if there is overlap.
+    """Compare half-open intervals [a, b) and [c, d).
+
+       Two intervals compare equal if there is any overlap.
+
+       Args:
+           interval_a: First interval as (start, end) datetime tuple.
+           interval_b: Second interval as (start, end) datetime tuple.
+
+       Returns:
+           -1 if interval_a is entirely before interval_b,
+           0 if they overlap,
+           1 if interval_a is entirely after interval_b.
     """
     (a, b) = interval_a
     (c, d) = interval_b

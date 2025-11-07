@@ -16,6 +16,11 @@ class Year:  # pylint:disable=too-many-public-methods
     months: List[Month]
 
     def __init__(self, year: Optional[int] = None) -> None:
+        """Initialize a Year object.
+
+           Args:
+               year: The year number. If None, uses the current year.
+        """
         super().__init__()
         if year is None:
             year = datetime.date.today().year
@@ -23,6 +28,8 @@ class Year:  # pylint:disable=too-many-public-methods
         self.months = [Month(year, i + 1) for i in range(12)]
 
     def __int__(self) -> int:
+        """Convert Year to integer representation.
+        """
         return self.year
 
     def range(self) -> Iterator[Day]:
@@ -37,6 +44,8 @@ class Year:  # pylint:disable=too-many-public-methods
         return self.first.datetime(), (self + 1).first.datetime()
 
     def __lt__(self, other: Any) -> bool:
+        """Compare if this year is less than another year or time range.
+        """
         if isinstance(other, int):
             return self.year < other
         othr = rangetuple(other)
@@ -45,6 +54,8 @@ class Year:  # pylint:disable=too-many-public-methods
         return rangecmp(self.rangetuple(), othr) < 0
 
     def __le__(self, other: Any) -> bool:
+        """Compare if this year is less than or equal to another year or time range.
+        """
         if isinstance(other, int):
             return self.year <= other
         othr = rangetuple(other)
@@ -53,6 +64,8 @@ class Year:  # pylint:disable=too-many-public-methods
         return rangecmp(self.rangetuple(), othr) <= 0
 
     def __eq__(self, other: Any) -> bool:
+        """Compare if this year is equal to another year or time range.
+        """
         if isinstance(other, int):
             return self.year == other
         othr = rangetuple(other)
@@ -61,9 +74,13 @@ class Year:  # pylint:disable=too-many-public-methods
         return rangecmp(self.rangetuple(), othr) == 0
 
     def __ne__(self, other: Any) -> bool:
+        """Compare if this year is not equal to another year or time range.
+        """
         return not self == other
 
     def __gt__(self, other: Any) -> bool:
+        """Compare if this year is greater than another year or time range.
+        """
         if isinstance(other, int):
             return self.year > other
         othr = rangetuple(other)
@@ -72,6 +89,8 @@ class Year:  # pylint:disable=too-many-public-methods
         return rangecmp(self.rangetuple(), othr) > 0
 
     def __ge__(self, other: Any) -> bool:
+        """Compare if this year is greater than or equal to another year or time range.
+        """
         if isinstance(other, int):
             return self.year >= other
         othr = rangetuple(other)
@@ -109,9 +128,13 @@ class Year:  # pylint:disable=too-many-public-methods
     #     return datetime.datetime.combine(d, t)
 
     def __repr__(self) -> str:
+        """Return string representation for debugging.
+        """
         return f'Year({self.year})'
 
     def __str__(self) -> str:  # pragma: nocover
+        """Return string representation of the year.
+        """
         return str(self.year)
 
     @property
@@ -157,9 +180,13 @@ class Year:  # pylint:disable=too-many-public-methods
         return Year(self.year + n)
 
     def __radd__(self, n: int) -> Year:
+        """Add n years to self (reverse operation).
+        """
         return self + n
 
     def __sub__(self, n: int) -> Year:
+        """Subtract n years from self.
+        """
         return self + (-n)
 
     # rsub doesn't make sense
@@ -223,50 +250,74 @@ class Year:  # pylint:disable=too-many-public-methods
     # pylint:disable=C0111
     @property
     def january(self) -> Month:
+        """Return January of this year.
+        """
         return self.months[0]
 
     @property
     def february(self) -> Month:
+        """Return February of this year.
+        """
         return self.months[1]
 
     @property
     def march(self) -> Month:
+        """Return March of this year.
+        """
         return self.months[2]
 
     @property
     def april(self) -> Month:
+        """Return April of this year.
+        """
         return self.months[3]
 
     @property
     def may(self) -> Month:
+        """Return May of this year.
+        """
         return self.months[4]
 
     @property
     def june(self) -> Month:
+        """Return June of this year.
+        """
         return self.months[5]
 
     @property
     def july(self) -> Month:
+        """Return July of this year.
+        """
         return self.months[6]
 
     @property
     def august(self) -> Month:
+        """Return August of this year.
+        """
         return self.months[7]
 
     @property
     def september(self) -> Month:
+        """Return September of this year.
+        """
         return self.months[8]
 
     @property
     def october(self) -> Month:
+        """Return October of this year.
+        """
         return self.months[9]
 
     @property
     def november(self) -> Month:
+        """Return November of this year.
+        """
         return self.months[10]
 
     @property
     def december(self) -> Month:
+        """Return December of this year.
+        """
         return self.months[11]
 
     def dayiter(self) -> Iterator[Day]:
@@ -276,7 +327,7 @@ class Year:  # pylint:disable=too-many-public-methods
             yield from m.days()
 
     def days(self) -> List[Day]:
-        """Yield all days in all months in year.
+        """Return all days in all months in year.
         """
         return list(self.dayiter())
 
@@ -309,6 +360,8 @@ class Year:  # pylint:disable=too-many-public-methods
         return self.months[-1].last
 
     def __hash__(self) -> int:
+        """Return hash value for this year.
+        """
         return self.year
 
     # def __eq__(self, other):
@@ -317,9 +370,13 @@ class Year:  # pylint:disable=too-many-public-methods
     #     return False
 
     def __contains__(self, date: Any) -> bool:
+        """Check if a date is within this year.
+        """
         return date.year == self.year
 
     def __getitem__(self, day: Day) -> Day:
+        """Get a specific day from this year.
+        """
         m = self.months[day.month - 1]
         return m[day]
 
@@ -341,6 +398,8 @@ class Year:  # pylint:disable=too-many-public-methods
             pass
 
     def _format(self, fmtchars: List[str]) -> Iterator[str]:
+        """Internal formatting helper method.
+        """
         # http://blog.tkbe.org/archive/date-filter-cheat-sheet/
         for ch in fmtchars:
             if ch == 'y':
@@ -351,8 +410,7 @@ class Year:  # pylint:disable=too-many-public-methods
                 yield ch
 
     def format(self, fmt: Optional[str] = None) -> str:
-        """Format according to format string. Default format is
-           monthname, four-digit-year.
+        """Format according to format string. Default format is four-digit-year.
         """
         if fmt is None:
             fmt = "Y"
