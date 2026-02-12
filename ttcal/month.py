@@ -8,7 +8,7 @@ import calendar
 import datetime
 
 if TYPE_CHECKING:
-    from .year import Year
+    from .year import Year  # noqa
 
 from .day import Day, Days
 from .week import Week

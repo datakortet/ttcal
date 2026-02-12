@@ -2,7 +2,7 @@
 Year class.
 """
 from __future__ import annotations
-from typing import Optional, List, Tuple, Union, Iterator, Any
+from typing import Optional, List, Tuple, Iterator, Any
 import datetime
 from .calfns import chop, rangecmp, rangetuple
 from .day import Day
