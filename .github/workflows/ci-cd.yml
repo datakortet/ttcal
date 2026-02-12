@@ -22,7 +22,7 @@ jobs:
           mkdir -p $LINTDIR
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.11'
 
       - run: pip install flake8
       - run: flake8 ttcal/** --max-line-length=199
@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
 
-        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
+        python-version: [ '3.10', '3.11', '3.12', '3.13', '3.14' ]
 
         os: [ubuntu-latest]
         # include:
@@ -79,7 +79,7 @@ jobs:
         run: mkdir -p $PIP_CACHE_DIR
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.11'
 
       - name: Cleanup
         run: |
