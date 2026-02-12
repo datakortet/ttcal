@@ -183,7 +183,10 @@ class Month:  # pylint:disable=too-many-public-methods
 
     def __lt__(self, other: Any) -> bool:
         """Less than comparison using range semantics.
+           Integers are compared against the month number (1-12).
         """
+        if isinstance(other, int):
+            return self.month < other
         othr = rangetuple(other)
         if othr is other:
             return False
@@ -191,7 +194,10 @@ class Month:  # pylint:disable=too-many-public-methods
 
     def __le__(self, other: Any) -> bool:
         """Less than or equal comparison using range semantics.
+           Integers are compared against the month number (1-12).
         """
+        if isinstance(other, int):
+            return self.month <= other
         othr = rangetuple(other)
         if othr is other:
             return False
@@ -199,7 +205,10 @@ class Month:  # pylint:disable=too-many-public-methods
 
     def __eq__(self, other: Any) -> bool:
         """Equal comparison using range semantics (overlapping ranges).
+           Integers are compared against the month number (1-12).
         """
+        if isinstance(other, int):
+            return self.month == other
         othr = rangetuple(other)
         if othr is other:
             return False
@@ -212,7 +221,10 @@ class Month:  # pylint:disable=too-many-public-methods
 
     def __gt__(self, other: Any) -> bool:
         """Greater than comparison using range semantics.
+           Integers are compared against the month number (1-12).
         """
+        if isinstance(other, int):
+            return self.month > other
         othr = rangetuple(other)
         if othr is other:
             return False
@@ -220,7 +232,10 @@ class Month:  # pylint:disable=too-many-public-methods
 
     def __ge__(self, other: Any) -> bool:
         """Greater than or equal comparison using range semantics.
+           Integers are compared against the month number (1-12).
         """
+        if isinstance(other, int):
+            return self.month >= other
         othr = rangetuple(other)
         if othr is other:
             return False
