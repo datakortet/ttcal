@@ -3,7 +3,7 @@ _schema: https://static.datakortet.no/schema/dkbuild.schema.yaml
 package:
   name: ttcal
   description: Simple calendar operations
-  version: 2.0.7
+  version: 2.0.8
   created: 2013
 
 build:
