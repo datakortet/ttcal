@@ -14,8 +14,8 @@ from .quarter import Quarter
 def from_idtag(idtag):
     """Return a class from idtag.
     """
-    assert len(idtag) > 1
-    assert idtag[0] in 'wdmqy'
+    if len(idtag) <= 1 or idtag[0] not in 'wdmqy':
+        raise ValueError(f'Invalid idtag: {idtag!r}')
 
     return {
         'w': Week,

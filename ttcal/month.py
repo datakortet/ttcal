@@ -97,7 +97,8 @@ class Month:  # pylint:disable=too-many-public-methods
             self.year = td.year
             self.month = td.month
         else:
-            assert None not in (year, month)
+            if year is None or month is None:
+                raise ValueError('Both year and month must be provided')
             self.year = year
             self.month = month
 

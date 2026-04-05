@@ -596,7 +596,8 @@ class Days(list):
                start_week: If True, adjust start to beginning of week (Monday)
         """
         super().__init__()
-        assert start <= end
+        if start > end:
+            raise ValueError(f'start ({start}) must be <= end ({end})')
         if start_week:
             start = start - start.weekday  # set to monday
 
