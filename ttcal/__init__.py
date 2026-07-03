@@ -2,7 +2,7 @@
 Date classes (originally from TikTok).
 """
 __version__ = '2.0.9'
-from .day import Day, Days, Today   # noqa  
+from .day import Day, Days, Today   # noqa
 from .duration import Duration, Period  # noqa
 from .calfns import chop, isoweek   # noqa
 from .month import Month

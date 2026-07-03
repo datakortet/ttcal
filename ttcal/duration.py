@@ -38,8 +38,6 @@ class Period:
         return f"Period({self.months} months)"
 
     def __add__(self, other):
-        """Add two durations together.
-        """
         """Add two periods together.
         """
         return Period(months=self.months + other.months)
@@ -123,7 +121,9 @@ class Duration(datetime.timedelta):
         if raise_on_error and not time_matches:
             raise ValueError(f"Couldn't parse {txt} as a duration.")
         if raise_on_error and time_matches.span()[1] != len(txt):
-            raise ValueError(f"Remaining text: {txt[time_matches.span()[1]:]} could not be parsed as a duration.")
+            span_end = time_matches.span()[1]
+            remaining = txt[span_end:]
+            raise ValueError(f"Remaining text: {remaining} could not be parsed as a duration.")
         time_groups = time_matches.groupdict()
         keys = list(time_groups.keys())
 
@@ -321,8 +321,6 @@ class Duration(datetime.timedelta):
 
     def __add__(self, other):
         """Add two durations together.
-        """
-        """Add two periods together.
         """
         return Duration(super().__add__(other))
 
