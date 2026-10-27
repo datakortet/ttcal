@@ -6,7 +6,7 @@ include:
 
 deploy_code:
   stage: deploy
-  image: thebjorn/dktestpackage3:latest
+  image: norsktest/dktestpackage311@sha256:35101d73e12bd6bab6e9cdbb12229e9ea2b58a288f75d51a9b525258784ebb14
   before_script:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$DEPLOY_PKEY")
