@@ -6,7 +6,7 @@ include:
 
 deploy_code:
   stage: deploy
-  image: norsktest/dktestpackage311@sha256:35101d73e12bd6bab6e9cdbb12229e9ea2b58a288f75d51a9b525258784ebb14
+  image: norsktest/dktestpackage312@sha256:af9f4003be3ecab1ab1ec5fa7e4cd50a08d6b20f1e5be1962406b7d0d296eb31
   before_script:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$DEPLOY_PKEY")
@@ -14,7 +14,7 @@ deploy_code:
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
     - dk pkg
-    - ssh -v deploy@fischer.datakortet.c.bitbit.net "cd /srv/lib/core/ttcal && git pull"
+    - ssh -v deploy@geralt.datakortet.c.bitbit.net "cd /srv/lib/core/ttcal && git pull"
   environment:
     name: production
     url: https://admin.datakortet.no/userenv/
