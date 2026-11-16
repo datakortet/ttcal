@@ -407,3 +407,6 @@ pip-selfcheck.json
 
 # End of https://www.gitignore.io/api/node,less,sass,venv,python,django,pycharm
 
+
+# Claude Code per-developer settings (may contain approved commands)
+.claude/settings.local.json
