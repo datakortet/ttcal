@@ -17,61 +17,61 @@ ttcal.calfns module
 
 .. automodule:: ttcal.calfns
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 ttcal.day module
 ----------------
 
 .. automodule:: ttcal.day
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 ttcal.duration module
 ---------------------
 
 .. automodule:: ttcal.duration
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 ttcal.month module
 ------------------
 
 .. automodule:: ttcal.month
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 ttcal.quarter module
 --------------------
 
 .. automodule:: ttcal.quarter
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 ttcal.week module
 -----------------
 
 .. automodule:: ttcal.week
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 ttcal.year module
 -----------------
 
 .. automodule:: ttcal.year
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: ttcal
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
