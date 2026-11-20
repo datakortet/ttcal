@@ -34,7 +34,7 @@ class Period:
         """Return string representation of the period.
         """
         if self.months >= 12:
-            return f"Period({self.months//12} years, {self.months%12} months)"
+            return f"Period({self.months//12} years, {self.months % 12} months)"
         return f"Period({self.months} months)"
 
     def __add__(self, other):
