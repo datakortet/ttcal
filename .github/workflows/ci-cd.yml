@@ -86,7 +86,7 @@ jobs:
           rm -rf dist
           rm -rf build
 
-      - run: pip install -U wheel packaging twine
+      - run: pip install -U setuptools wheel packaging twine
       - run: pip install -r requirements.txt
       - run: python setup.py sdist bdist_wheel
 
